@@ -17,35 +17,26 @@
   --radius: 18px;
   --blur: 16px;
 }
-
 [data-theme="light"]{
   --bg:#f5f6fb;
   --glass: rgba(255,255,255,.85);
   --glass-weak: rgba(255,255,255,.65);
   --border: rgba(10,18,40,.12);
-  --text: #0b1020;
-  --muted: #4a4f6a;
+  --text:#0b1020;
+  --muted:#4a4f6a;
   --accent:#5b4bff;
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: radial-gradient(900px 500px at 20% 0%, #1a2350, transparent),
-              radial-gradient(900px 500px at 80% 20%, #2b1658, transparent),
-              var(--bg);
+  background:
+    radial-gradient(900px 500px at 20% 0%, #1a2350, transparent),
+    radial-gradient(900px 500px at 80% 20%, #2b1658, transparent),
+    var(--bg);
   color:var(--text);
 }
-
-/* ===== layout ===== */
 .wrap{max-width:1100px;margin:auto;padding:20px 14px 70px}
-header{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:12px;margin-bottom:18px
-}
-h1{margin:0;font-size:26px}
-.subtitle{color:var(--muted);font-size:14px}
 
 /* ===== glass ===== */
 .glass{
@@ -57,7 +48,19 @@ h1{margin:0;font-size:26px}
   box-shadow: 0 20px 60px rgba(0,0,0,.35);
 }
 
+/* ===== header ===== */
+.header{
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+h1{margin:0;font-size:26px}
+.subtitle{color:var(--muted);font-size:14px}
+
 /* ===== buttons ===== */
+.actions{display:flex;gap:8px;flex-wrap:wrap}
 .btn{
   padding:9px 14px;
   border-radius:999px;
@@ -66,12 +69,13 @@ h1{margin:0;font-size:26px}
   color:var(--text);
   cursor:pointer;
   font-weight:600;
+  text-decoration:none;
   transition:.2s;
 }
 .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
 
 /* ===== days ===== */
-.day{margin-top:26px}
+.day{margin-top:28px}
 .day h2{margin:0 0 10px;font-size:20px}
 
 /* ===== table ===== */
@@ -86,7 +90,7 @@ th,td{
 th{background:rgba(0,0,0,.18);font-weight:700}
 tr:last-child td{border-bottom:none}
 
-/* ===== mobile cards ===== */
+/* ===== mobile ===== */
 @media(max-width:720px){
   table,thead,tbody,th,td,tr{display:block}
   thead{display:none}
@@ -124,13 +128,18 @@ footer{
 <body>
 <div class="wrap">
 
-<header class="glass" style="padding:16px">
+<!-- ===== HEADER ===== -->
+<div class="glass header">
   <div>
     <h1>25 группа · 2 семестр</h1>
     <div class="subtitle">Основное расписание · 2025–2026 уч. год</div>
   </div>
-  <button class="btn" id="themeToggle">🌓 Тема</button>
-</header>
+  <div class="actions">
+    <a class="btn" href="./">← К списку групп</a>
+    <a class="btn" href="../../">← На главную</a>
+    <button class="btn" id="themeToggle">🌓 Тема</button>
+  </div>
+</div>
 
 <!-- ===== ПОНЕДЕЛЬНИК ===== -->
 <section class="day">
@@ -153,7 +162,70 @@ footer{
 </div>
 </section>
 
-<!-- остальные дни можно оставить как у тебя, просто обернув таблицы в glass -->
+<!-- ===== ВТОРНИК ===== -->
+<section class="day">
+<h2>Вторник</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td data-label="№">1</td><td data-label="Время">8:30–10:05</td><td data-label="Дисциплина">Информационные технологии / ОС</td><td data-label="Ауд.">408 / 103</td></tr>
+<tr><td>2</td><td>10:15–11:50</td><td>Информационные технологии / ОС</td><td>103 / 409</td></tr>
+<tr><td>—</td><td>12:00–12:45</td><td>Обед</td><td>—</td></tr>
+<tr><td>3</td><td>12:50–14:30</td><td>Графический дизайн и мультимедиа / Архитектура АС</td><td>409 / 103</td></tr>
+<tr><td>4</td><td>14:35–16:10</td><td>Архитектура АС / Графический дизайн</td><td>103 / 409</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- ===== СРЕДА ===== -->
+<section class="day">
+<h2>Среда</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td data-label="№">1</td><td data-label="Время">8:30–9:15</td><td data-label="Дисциплина">Экономика отрасли</td><td data-label="Ауд.">103</td></tr>
+<tr><td>2</td><td>9:20–10:05</td><td>МДК 05.02 Разработка кода ИС</td><td>103</td></tr>
+<tr><td>3</td><td>10:15–11:50</td><td>Физкультура</td><td>—</td></tr>
+<tr><td>—</td><td>12:00–12:45</td><td>Обед</td><td>—</td></tr>
+<tr><td>4</td><td>14:35–16:10</td><td>МДК 05.01 Проектирование ИС</td><td>103</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- ===== ЧЕТВЕРГ ===== -->
+<section class="day">
+<h2>Четверг</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td data-label="№">1</td><td data-label="Время">8:30–11:50</td><td data-label="Дисциплина">МДК 08.02 Графический дизайн и мультимедиа</td><td data-label="Ауд.">409 / 408</td></tr>
+<tr><td>—</td><td>12:00–12:45</td><td>Обед</td><td>—</td></tr>
+<tr><td>2</td><td>12:50–14:30</td><td>Стандартизация и сертификация</td><td>409 / 103</td></tr>
+<tr><td>3</td><td>14:35–16:10</td><td>МДК 05.01 Проектирование ИС</td><td>103</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- ===== ПЯТНИЦА ===== -->
+<section class="day">
+<h2>Пятница</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td data-label="№">1</td><td data-label="Время">7:40–8:25</td><td data-label="Дисциплина">Основы алгоритмизации</td><td data-label="Ауд.">402</td></tr>
+<tr><td>2</td><td>8:30–10:05</td><td>Иностранный язык</td><td>308 / 106</td></tr>
+<tr><td>3</td><td>10:15–11:50</td><td>Элементы высшей математики</td><td>213</td></tr>
+<tr><td>—</td><td>12:00–12:45</td><td>Обед</td><td>—</td></tr>
+<tr><td>4</td><td>12:50–14:30</td><td>Русский язык и КР / Башкирский язык</td><td>208</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- ===== СУББОТА ===== -->
+<section class="day">
+<h2>Суббота</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td data-label="№">—</td><td data-label="Время">—</td><td data-label="Дисциплина">Занятий нет</td><td data-label="Ауд.">—</td></tr>
+</tbody></table>
+</div>
+</section>
 
 <footer>
   <span>Неофициальный сайт</span>
@@ -163,13 +235,14 @@ footer{
 </div>
 
 <script>
-const r=document.documentElement;
+const root=document.documentElement;
 const t=document.getElementById("themeToggle");
-if(localStorage.theme) r.dataset.theme=localStorage.theme;
+if(localStorage.theme) root.dataset.theme=localStorage.theme;
 t.onclick=()=>{
-  r.dataset.theme=r.dataset.theme==="light"?"dark":"light";
-  localStorage.theme=r.dataset.theme;
+  root.dataset.theme = root.dataset.theme==="light" ? "dark" : "light";
+  localStorage.theme = root.dataset.theme;
 };
 </script>
+
 </body>
 </html>
