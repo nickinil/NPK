@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Нефтекамский Педагогический Колледж</title>
-  <meta name="description" content="Официальный сайт НПК: новости, расписание, контакты." />
+  <meta name="description" content="Нефтекамский Педагогический Колледж — официальный сайт." />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
@@ -22,9 +22,8 @@
     </a>
 
     <nav class="nav">
-      <a class="nav__link" href="./">Главная</a>
+      <a class="nav__link is-active" href="./">Главная</a>
       <a class="nav__link" href="./schedule/">Расписание</a>
-      <a class="nav__link" href="#contacts">Контакты</a>
     </nav>
 
     <div class="actions">
@@ -36,77 +35,23 @@
   </header>
 
   <main class="wrap">
-    <section class="hero">
+    <section class="hero hero--single">
       <div class="card glass reveal">
         <div class="badge">Официальный сайт</div>
         <h1 class="h1">Нефтекамский Педагогический Колледж</h1>
-        <p class="lead">
-          Новости, расписание групп, изменения и полезная информация для студентов.
+        <p class="lead muted">
+          Официальная информация и расписание учебных групп.
         </p>
 
         <div class="btnrow">
-          <a class="btn btn--primary" href="./schedule/">Открыть расписание</a>
-          <a class="btn btn--ghost" href="#contacts">Связаться</a>
-        </div>
-
-        <div class="stats">
-          <div class="stat glass-mini">
-            <div class="stat__n">2</div>
-            <div class="stat__t">темы (светлая/тёмная)</div>
-          </div>
-          <div class="stat glass-mini">
-            <div class="stat__n">2</div>
-            <div class="stat__t">раздела расписания</div>
-          </div>
-          <div class="stat glass-mini">
-            <div class="stat__n">∞</div>
-            <div class="stat__t">можно дополнять</div>
-          </div>
+          <a class="btn btn--primary" href="./schedule/">Перейти к расписанию</a>
         </div>
       </div>
-
-      <aside class="side">
-        <div class="card glass reveal delay-1">
-          <h2 class="h2">Быстрые ссылки</h2>
-          <div class="list">
-            <a class="list__item" href="./schedule/main/">Основное расписание</a>
-            <a class="list__item" href="./schedule/changes/">Изменения в расписании</a>
-          </div>
-        </div>
-
-        <div class="card glass reveal delay-2" id="contacts">
-          <h2 class="h2">Контакты</h2>
-          <p class="muted">
-            Здесь можно указать телефон, адрес, почту, соцсети.
-          </p>
-          <div class="contacts">
-            <a class="chip" href="mailto:info@example.com">info@example.com</a>
-            <a class="chip" href="#" aria-label="ВК">VK</a>
-            <a class="chip" href="#" aria-label="Telegram">Telegram</a>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <section class="grid3">
-      <article class="card glass reveal">
-        <h3 class="h3">Новости</h3>
-        <p class="muted">Добавим ленту новостей (можно вручную или через файл).</p>
-      </article>
-      <article class="card glass reveal delay-1">
-        <h3 class="h3">Абитуриенту</h3>
-        <p class="muted">Документы, направления, приёмная комиссия.</p>
-      </article>
-      <article class="card glass reveal delay-2">
-        <h3 class="h3">Студенту</h3>
-        <p class="muted">Расписание, изменения, объявления, полезные ссылки.</p>
-      </article>
     </section>
 
     <footer class="footer">
       <div class="footer__inner glass">
-        <span>© <span id="year"></span> Нефтекамский Педагогический Колледж</span>
-        <span class="muted">Сделано на HTML • Liquid Glass UI</span>
+        <span>© <span id="year"></span> НПК</span>
       </div>
     </footer>
   </main>
