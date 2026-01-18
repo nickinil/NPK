@@ -224,7 +224,7 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 .delay-2{transition-delay: .22s;}
 
 @media (max-width: 920px){
-  .hero{grid-template-columns:1fr;}
+  .hero--single{grid-template-columns: 1fr !important;}
   .grid3{grid-template-columns:1fr;}
   .grid2{grid-template-columns:1fr;}
   .stats{grid-template-columns:1fr;}
@@ -232,3 +232,5 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
   .brand__sub{display:none;}
   .nav{display:none;}
 }
+
+
