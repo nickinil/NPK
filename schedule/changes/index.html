@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Изменения в расписании — НПК</title>
+  <link rel="stylesheet" href="../../assets/styles.css" />
+</head>
+<body>
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb o1"></span>
+    <span class="orb o2"></span>
+    <span class="orb o3"></span>
+  </div>
+
+  <header class="topbar glass">
+    <a class="brand" href="../../">
+      <span class="brand__dot"></span>
+      <span class="brand__text">НПК</span>
+      <span class="brand__sub">Изменения</span>
+    </a>
+
+    <nav class="nav">
+      <a class="nav__link" href="../../">Главная</a>
+      <a class="nav__link" href="../">Расписание</a>
+      <a class="nav__link" href="../main/">Основное</a>
+      <a class="nav__link is-active" href="./">Изменения</a>
+    </nav>
+
+    <div class="actions">
+      <button class="btn btn--ghost" id="themeToggle" type="button" aria-label="Переключить тему">
+        <span class="icon">🌓</span>
+        <span class="btn__text">Тема</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card glass reveal">
+      <div class="row">
+        <div>
+          <h1 class="h1">Изменения в расписании</h1>
+          <p class="muted">Оперативные изменения — по группам.</p>
+        </div>
+        <div class="searchbox glass-mini">
+          <span class="icon">🔎</span>
+          <input id="groupSearch" type="text" placeholder="Поиск группы..." autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="groups" id="groups">
+        <a class="group glass-mini" href="#" data-group="11">11 группа</a>
+        <a class="group glass-mini" href="#" data-group="13">13 группа</a>
+        <a class="group glass-mini" href="#" data-group="14">14 группа</a>
+        <a class="group glass-mini" href="#" data-group="15">15 группа</a>
+        <a class="group glass-mini" href="#" data-group="17">17 группа</a>
+        <a class="group glass-mini" href="#" data-group="18">18 группа</a>
+
+        <a class="group glass-mini" href="#" data-group="21">21 группа</a>
+        <a class="group glass-mini" href="#" data-group="23">23 группа</a>
+        <a class="group glass-mini" href="#" data-group="25">25 группа</a>
+        <a class="group glass-mini" href="#" data-group="27">27 группа</a>
+        <a class="group glass-mini" href="#" data-group="28">28 группа</a>
+        <a class="group glass-mini" href="#" data-group="29">29 группа</a>
+        <a class="group glass-mini" href="#" data-group="31">31 группа</a>
+        <a class="group glass-mini" href="#" data-group="33">33 группа</a>
+        <a class="group glass-mini" href="#" data-group="35">35 группа</a>
+        <a class="group glass-mini" href="#" data-group="36">36 группа</a>
+        <a class="group glass-mini" href="#" data-group="37">37 группа</a>
+        <a class="group glass-mini" href="#" data-group="38">38 группа</a>
+        <a class="group glass-mini" href="#" data-group="43">43 группа</a>
+        <a class="group glass-mini" href="#" data-group="44">44 группа</a>
+        <a class="group glass-mini" href="#" data-group="45">45 группа</a>
+        <a class="group glass-mini" href="#" data-group="48">48 группа</a>
+      </div>
+
+      <div class="hint glass-mini">
+        <strong>Рекомендация:</strong> изменения удобно хранить файлами по датам, например
+        <code>./files/2026-01-18.pdf</code> или <code>./files/changes-today.jpg</code>.
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner glass">
+        <span>© <span id="year"></span> НПК</span>
+        <span class="muted">Раздел: Изменения</span>
+      </div>
+    </footer>
+  </main>
+
+  <script src="../../assets/app.js"></script>
+</body>
+</html>
