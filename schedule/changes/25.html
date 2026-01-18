@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>25 группа — изменения · 19 января 2026</title>
+<title>25 группа — изменения</title>
 
 <style>
 :root{
@@ -13,7 +13,7 @@
   --border: rgba(255,255,255,.18);
   --text: rgba(255,255,255,.94);
   --muted: rgba(255,255,255,.65);
-  --accent:#ff6b6b;
+  --accent:#7c5cff;
   --radius:18px;
   --blur:16px;
 }
@@ -24,23 +24,31 @@
   --border: rgba(10,18,40,.12);
   --text:#0b1020;
   --muted:#4a4f6a;
-  --accent:#d63636;
+  --accent:#5b4bff;
 }
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background:var(--bg);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(900px 500px at 20% 0%, #1a2350, transparent),
+    radial-gradient(900px 500px at 80% 20%, #2b1658, transparent),
+    var(--bg);
   color:var(--text);
 }
 .wrap{max-width:1100px;margin:auto;padding:20px 14px 70px}
+
+/* ===== glass ===== */
 .glass{
   background:linear-gradient(180deg,var(--glass),var(--glass-weak));
   border:1px solid var(--border);
   border-radius:var(--radius);
   backdrop-filter:blur(var(--blur));
   -webkit-backdrop-filter:blur(var(--blur));
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
+
+/* ===== header ===== */
 .header{
   padding:16px;
   display:flex;
@@ -50,6 +58,8 @@ body{
 }
 h1{margin:0;font-size:26px}
 .subtitle{color:var(--muted);font-size:14px}
+
+/* ===== buttons ===== */
 .actions{display:flex;gap:8px;flex-wrap:wrap}
 .btn{
   padding:9px 14px;
@@ -59,32 +69,40 @@ h1{margin:0;font-size:26px}
   color:var(--text);
   text-decoration:none;
   cursor:pointer;
+  font-weight:600;
+  transition:.2s;
 }
+.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+
+/* ===== content ===== */
 .day{margin-top:26px}
-table{
-  width:100%;
-  border-collapse:collapse;
-}
+.day h2{margin:0 0 10px;font-size:20px}
+
+/* ===== table ===== */
+.table-wrap{overflow:hidden}
+table{width:100%;border-collapse:collapse}
 th,td{
   padding:12px;
-  border:1px solid var(--border);
-  vertical-align:top;
+  border-bottom:1px solid var(--border);
   font-size:14px;
+  vertical-align:top;
 }
 th{
   background:rgba(0,0,0,.18);
-  text-align:left;
+  font-weight:700;
 }
-.center{text-align:center}
+tr:last-child td{border-bottom:none}
 
+/* ===== mobile ===== */
 @media(max-width:720px){
   table,thead,tbody,th,td,tr{display:block}
   thead{display:none}
   tr{
-    margin-bottom:12px;
     padding:12px;
+    margin-bottom:12px;
     border-radius:14px;
     background:var(--glass);
+    border:1px solid var(--border);
   }
   td{border:none;padding:6px 0}
   td::before{
@@ -95,12 +113,15 @@ th{
   }
 }
 
+/* ===== footer ===== */
 footer{
   margin-top:40px;
   padding-top:14px;
   border-top:1px solid var(--border);
   display:flex;
   justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
   font-size:13px;
   color:var(--muted);
 }
@@ -113,8 +134,8 @@ footer{
 <!-- HEADER -->
 <div class="glass header">
   <div>
-    <h1>25 группа</h1>
-    <div class="subtitle">Изменения · 19 января 2026</div>
+    <h1>25 группа · изменения</h1>
+    <div class="subtitle">19 января 2026</div>
   </div>
   <div class="actions">
     <a class="btn" href="./">← К изменениям</a>
@@ -123,103 +144,105 @@ footer{
   </div>
 </div>
 
+<!-- TABLE -->
 <section class="day">
-<div class="glass">
+<h2>Понедельник</h2>
+<div class="glass table-wrap">
 <table>
 <thead>
 <tr>
-  <th class="center">№</th>
+  <th>№</th>
   <th>Время</th>
   <th>Дисциплина</th>
-  <th class="center">Ауд.</th>
+  <th>Ауд.</th>
 </tr>
 </thead>
 <tbody>
 
 <tr>
-<td data-label="№" class="center">1</td>
+<td data-label="№">1</td>
 <td data-label="Время">8:30–9:10</td>
 <td data-label="Дисциплина">
   Разговоры о важном — Классный час
 </td>
-<td data-label="Ауд." class="center">407</td>
+<td data-label="Ауд.">407</td>
 </tr>
 
 <tr>
-<td class="center">2</td>
+<td>2</td>
 <td>9:15–9:55</td>
 <td>
   Безопасность жизнедеятельности<br>
-  <small class="muted">Преподаватель Ижбулдин Е.А.</small>
+  <span class="muted">Преподаватель Ижбулдин Е.А.</span>
 </td>
-<td class="center">313</td>
+<td>313</td>
 </tr>
 
 <tr>
-<td class="center">3</td>
+<td>3</td>
 <td>10:05–10:45</td>
 <td>
   Основы интеллектуального труда<br>
-  <small class="muted">Преподаватель Валиева Р.Р.</small>
+  <span class="muted">Преподаватель Валиева Р.Р.</span>
 </td>
-<td class="center">102</td>
+<td>102</td>
 </tr>
 
 <tr>
-<td class="center">4</td>
+<td>4</td>
 <td>10:50–11:30</td>
 <td>
   Психология общения<br>
-  <small class="muted">Преподаватель Марварова А.Р.</small>
+  <span class="muted">Преподаватель Марварова А.Р.</span>
 </td>
-<td class="center">210</td>
+<td>210</td>
 </tr>
 
 <tr>
-<td class="center">—</td>
+<td>—</td>
 <td>11:40–12:20</td>
-<td class="center"><strong>Обед</strong></td>
-<td class="center">—</td>
+<td><strong>Обед</strong></td>
+<td>—</td>
 </tr>
 
 <tr>
-<td class="center">5</td>
+<td>5</td>
 <td>12:25–13:05</td>
 <td>
   Психология общения<br>
-  <small class="muted">Преподаватель Марварова А.Р.</small>
+  <span class="muted">Преподаватель Марварова А.Р.</span>
 </td>
-<td class="center">210</td>
+<td>210</td>
 </tr>
 
 <tr>
-<td class="center">6</td>
+<td>6</td>
 <td>13:15–13:55</td>
 <td>
   Информационные технологии<br>
-  <small class="muted">Преподаватель Нурисламова Э.И.</small>
+  <span class="muted">Преподаватель Нурисламова Э.И.</span>
 </td>
-<td class="center">408</td>
+<td>408</td>
 </tr>
 
 <tr>
-<td class="center">7</td>
+<td>7</td>
 <td>14:00–14:40</td>
 <td>
   Информационные технологии<br>
-  <small class="muted">Преподаватель Нурисламова Э.И.</small>
+  <span class="muted">Преподаватель Нурисламова Э.И.</span>
 </td>
-<td class="center">408</td>
+<td>408</td>
 </tr>
 
 <tr>
-<td class="center">8</td>
+<td>8</td>
 <td>14:45–15:25</td>
 <td>
   История<br>
-  <small class="muted">Преподаватель Шакирова Е.Н.</small>
+  <span class="muted">Преподаватель Шакирова Е.Н.</span>
 </td>
-<td class="center">212</td>
+<td>212</td>
 </tr>
 
 </tbody>
