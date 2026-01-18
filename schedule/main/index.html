@@ -2,86 +2,247 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Основное расписание — НПК</title>
-  <link rel="stylesheet" href="../../assets/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Основное расписание — 25 группа</title>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --accent: #7c5cff;
+      --radius: 16px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f6fb;
+      --card: rgba(255,255,255,.9);
+      --border: rgba(0,0,0,.1);
+      --text: #0b1020;
+      --muted: #4a4f6a;
+      --accent: #5b4bff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 14px 60px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    /* ===== TABLE ===== */
+    .day {
+      margin-bottom: 26px;
+    }
+
+    .day h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: rgba(0,0,0,.15);
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 700px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        border-bottom: 1px solid var(--border);
+        padding: 10px;
+      }
+
+      td {
+        border: none;
+        padding: 6px 0;
+      }
+
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+      }
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 13px;
+    }
+  </style>
 </head>
+
 <body>
-  <div class="bg-orbs" aria-hidden="true">
-    <span class="orb o1"></span>
-    <span class="orb o2"></span>
-    <span class="orb o3"></span>
-  </div>
-
-  <header class="topbar glass">
-    <a class="brand" href="../../">
-      <span class="brand__dot"></span>
-      <span class="brand__text">НПК</span>
-      <span class="brand__sub">Основное расписание</span>
-    </a>
-
-    <nav class="nav">
-      <a class="nav__link" href="../../">Главная</a>
-      <a class="nav__link" href="../">Расписание</a>
-      <a class="nav__link is-active" href="./">Основное</a>
-      <a class="nav__link" href="../changes/">Изменения</a>
-    </nav>
-
-    <div class="actions">
-      <button class="btn btn--ghost" id="themeToggle" type="button" aria-label="Переключить тему">
-        <span class="icon">🌓</span>
-        <span class="btn__text">Тема</span>
-      </button>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <section class="card glass reveal">
-      <div class="row">
-        <div>
-          <h1 class="h1">Основное расписание</h1>
-          <p class="muted">Выберите группу.</p>
-        </div>
-        <div class="searchbox glass-mini">
-          <span class="icon">🔎</span>
-          <input id="groupSearch" type="text" placeholder="Поиск группы..." autocomplete="off" />
-        </div>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>25 группа — 2 семестр</h1>
+        <div class="subtitle">Основное расписание · 2025–2026 уч. год</div>
       </div>
+      <button class="btn" id="themeToggle">🌓 Тема</button>
+    </header>
 
-      <div class="groups" id="groups">
-        <a class="group glass-mini" href="#" data-group="11">11 группа</a>
-        <a class="group glass-mini" href="#" data-group="13">13 группа</a>
-        <a class="group glass-mini" href="#" data-group="14">14 группа</a>
-        <a class="group glass-mini" href="#" data-group="15">15 группа</a>
-        <a class="group glass-mini" href="#" data-group="17">17 группа</a>
-        <a class="group glass-mini" href="#" data-group="18">18 группа</a>
-
-        <a class="group glass-mini" href="#" data-group="21">21 группа</a>
-        <a class="group glass-mini" href="#" data-group="23">23 группа</a>
-        <a class="group glass-mini" href="#" data-group="25">25 группа</a>
-        <a class="group glass-mini" href="#" data-group="27">27 группа</a>
-        <a class="group glass-mini" href="#" data-group="28">28 группа</a>
-        <a class="group glass-mini" href="#" data-group="29">29 группа</a>
-        <a class="group glass-mini" href="#" data-group="31">31 группа</a>
-        <a class="group glass-mini" href="#" data-group="33">33 группа</a>
-        <a class="group glass-mini" href="#" data-group="35">35 группа</a>
-        <a class="group glass-mini" href="#" data-group="36">36 группа</a>
-        <a class="group glass-mini" href="#" data-group="37">37 группа</a>
-        <a class="group glass-mini" href="#" data-group="38">38 группа</a>
-        <a class="group glass-mini" href="#" data-group="43">43 группа</a>
-        <a class="group glass-mini" href="#" data-group="44">44 группа</a>
-        <a class="group glass-mini" href="#" data-group="45">45 группа</a>
-        <a class="group glass-mini" href="#" data-group="48">48 группа</a>
-      </div>
+    <!-- ПОНЕДЕЛЬНИК -->
+    <section class="day">
+      <h2>Понедельник</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Время</th>
+            <th>Дисциплина</th>
+            <th>Ауд.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="№">1</td>
+            <td data-label="Время">8:30–9:10</td>
+            <td data-label="Дисциплина">Классный час</td>
+            <td data-label="Ауд.">407</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>9:15–9:55</td>
+            <td>Безопасность жизнедеятельности</td>
+            <td>313</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>10:05–10:45</td>
+            <td>Основы интеллектуального труда</td>
+            <td>102</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>10:50–11:30</td>
+            <td>Психология общения</td>
+            <td>210</td>
+          </tr>
+          <tr>
+            <td>—</td>
+            <td>11:40–12:20</td>
+            <td>Обед</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>12:25–13:05</td>
+            <td>Психология общения</td>
+            <td>210</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>13:15–13:55</td>
+            <td>Дискретная математика</td>
+            <td>403</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>14:00–14:40</td>
+            <td>Теория вероятностей</td>
+            <td>403</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>14:45–15:25</td>
+            <td>История</td>
+            <td>212</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
-    <footer class="footer">
-      <div class="footer__inner glass">
-        <span>© <span id="year"></span> НПК</span>
-      </div>
-    </footer>
-  </main>
+    <!-- по такому же шаблону легко добавить ВТ–СБ -->
 
-  <script src="../../assets/app.js"></script>
+    <footer>
+      <span>Неофициальный сайт</span>
+      <span>Сделано с любовью ❤️</span>
+    </footer>
+  </div>
+
+  <script>
+    const btn = document.getElementById("themeToggle");
+    const root = document.documentElement;
+    const saved = localStorage.getItem("theme");
+    if (saved) root.setAttribute("data-theme", saved);
+
+    btn.onclick = () => {
+      const cur = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      root.setAttribute("data-theme", cur);
+      localStorage.setItem("theme", cur);
+    };
+  </script>
 </body>
 </html>
