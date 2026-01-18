@@ -40,16 +40,15 @@
       <div class="row">
         <div>
           <h1 class="h1">Основное расписание</h1>
-          <p class="muted">Выберите группу, чтобы открыть файл (PDF/изображение).</p>
+          <p class="muted">Выберите группу.</p>
         </div>
         <div class="searchbox glass-mini">
           <span class="icon">🔎</span>
-          <input id="groupSearch" type="text" placeholder="Поиск группы: 11, 25, 48..." autocomplete="off" />
+          <input id="groupSearch" type="text" placeholder="Поиск группы..." autocomplete="off" />
         </div>
       </div>
 
       <div class="groups" id="groups">
-        <!-- Ссылки пока-заглушки: добавишь файлы позже -->
         <a class="group glass-mini" href="#" data-group="11">11 группа</a>
         <a class="group glass-mini" href="#" data-group="13">13 группа</a>
         <a class="group glass-mini" href="#" data-group="14">14 группа</a>
@@ -74,18 +73,11 @@
         <a class="group glass-mini" href="#" data-group="45">45 группа</a>
         <a class="group glass-mini" href="#" data-group="48">48 группа</a>
       </div>
-
-      <div class="hint glass-mini">
-        <strong>Как привязать реальные файлы:</strong>
-        загрузи PDF в папку <code>schedule/main/files/</code> и в ссылке вместо <code>#</code> укажи путь, например:
-        <code>href="./files/11.pdf"</code>
-      </div>
     </section>
 
     <footer class="footer">
       <div class="footer__inner glass">
         <span>© <span id="year"></span> НПК</span>
-        <span class="muted">Раздел: Основное расписание</span>
       </div>
     </footer>
   </main>
