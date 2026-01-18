@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Изменения — 25 группа · 19 января 2026</title>
+<title>25 группа — изменения · 19 января 2026</title>
 
 <style>
 :root{
@@ -13,14 +13,14 @@
   --border: rgba(255,255,255,.18);
   --text: rgba(255,255,255,.94);
   --muted: rgba(255,255,255,.65);
-  --accent: #ff6b6b;
-  --radius: 18px;
-  --blur: 16px;
+  --accent:#ff6b6b;
+  --radius:18px;
+  --blur:16px;
 }
 [data-theme="light"]{
   --bg:#f5f6fb;
-  --glass: rgba(255,255,255,.85);
-  --glass-weak: rgba(255,255,255,.65);
+  --glass: rgba(255,255,255,.9);
+  --glass-weak: rgba(255,255,255,.7);
   --border: rgba(10,18,40,.12);
   --text:#0b1020;
   --muted:#4a4f6a;
@@ -30,20 +30,16 @@
 body{
   margin:0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background:
-    radial-gradient(900px 500px at 20% 0%, #2a1630, transparent),
-    radial-gradient(900px 500px at 80% 20%, #401b1b, transparent),
-    var(--bg);
+  background:var(--bg);
   color:var(--text);
 }
 .wrap{max-width:1100px;margin:auto;padding:20px 14px 70px}
 .glass{
-  background: linear-gradient(180deg, var(--glass), var(--glass-weak));
+  background:linear-gradient(180deg,var(--glass),var(--glass-weak));
   border:1px solid var(--border);
-  border-radius: var(--radius);
-  backdrop-filter: blur(var(--blur));
-  -webkit-backdrop-filter: blur(var(--blur));
-  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  border-radius:var(--radius);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
 }
 .header{
   padding:16px;
@@ -61,36 +57,35 @@ h1{margin:0;font-size:26px}
   border:1px solid var(--border);
   background:var(--glass);
   color:var(--text);
-  cursor:pointer;
-  font-weight:600;
   text-decoration:none;
-  transition:.2s;
+  cursor:pointer;
 }
-.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
-.day{margin-top:28px}
-.day h2{margin:0 0 10px;font-size:20px}
-.table-wrap{overflow:hidden}
-table{width:100%;border-collapse:collapse}
+.day{margin-top:26px}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
 th,td{
-  padding:11px 12px;
-  border-bottom:1px solid var(--border);
-  font-size:14px;
+  padding:12px;
+  border:1px solid var(--border);
   vertical-align:top;
+  font-size:14px;
 }
-th{background:rgba(0,0,0,.18);font-weight:700}
-tr:last-child td{border-bottom:none}
-tr.changed{background: rgba(255,107,107,.18)}
+th{
+  background:rgba(0,0,0,.18);
+  text-align:left;
+}
+.center{text-align:center}
+
 @media(max-width:720px){
   table,thead,tbody,th,td,tr{display:block}
   thead{display:none}
   tr{
-    padding:12px;
     margin-bottom:12px;
+    padding:12px;
     border-radius:14px;
     background:var(--glass);
-    border:1px solid var(--border);
   }
-  tr.changed{border-left:4px solid var(--accent)}
   td{border:none;padding:6px 0}
   td::before{
     content:attr(data-label);
@@ -99,20 +94,13 @@ tr.changed{background: rgba(255,107,107,.18)}
     color:var(--muted);
   }
 }
-.note{
-  margin-top:14px;
-  padding:12px;
-  font-size:14px;
-  color:var(--muted);
-}
+
 footer{
   margin-top:40px;
   padding-top:14px;
   border-top:1px solid var(--border);
   display:flex;
   justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
   font-size:13px;
   color:var(--muted);
 }
@@ -125,54 +113,117 @@ footer{
 <!-- HEADER -->
 <div class="glass header">
   <div>
-    <h1>25 группа · изменения</h1>
-    <div class="subtitle">19 января 2026</div>
+    <h1>25 группа</h1>
+    <div class="subtitle">Изменения · 19 января 2026</div>
   </div>
   <div class="actions">
     <a class="btn" href="./">← К изменениям</a>
-    <a class="btn" href="../main/25.html">← Основное расписание</a>
+    <a class="btn" href="../main/25.html">← Основное</a>
     <button class="btn" id="themeToggle">🌓 Тема</button>
   </div>
 </div>
 
-<!-- ИЗМЕНЕНИЯ -->
 <section class="day">
-<h2>Понедельник</h2>
-<div class="glass table-wrap">
+<div class="glass">
 <table>
 <thead>
 <tr>
-  <th>№</th>
+  <th class="center">№</th>
   <th>Время</th>
-  <th>Изменение</th>
-  <th>Ауд.</th>
+  <th>Дисциплина</th>
+  <th class="center">Ауд.</th>
 </tr>
 </thead>
 <tbody>
-<tr class="changed">
-  <td data-label="№">6</td>
-  <td data-label="Время">13:15–13:55</td>
-  <td data-label="Изменение">
-    Информационные технологии<br>
-    <small class="muted">Преподаватель Нурисламова Э.И.</small>
-  </td>
-  <td data-label="Ауд.">408</td>
+
+<tr>
+<td data-label="№" class="center">1</td>
+<td data-label="Время">8:30–9:10</td>
+<td data-label="Дисциплина">
+  Разговоры о важном — Классный час
+</td>
+<td data-label="Ауд." class="center">407</td>
 </tr>
-<tr class="changed">
-  <td>7</td>
-  <td>14:00–14:40</td>
-  <td>
-    Информационные технологии<br>
-    <small class="muted">Преподаватель Нурисламова Э.И.</small>
-  </td>
-  <td>408</td>
+
+<tr>
+<td class="center">2</td>
+<td>9:15–9:55</td>
+<td>
+  Безопасность жизнедеятельности<br>
+  <small class="muted">Преподаватель Ижбулдин Е.А.</small>
+</td>
+<td class="center">313</td>
 </tr>
+
+<tr>
+<td class="center">3</td>
+<td>10:05–10:45</td>
+<td>
+  Основы интеллектуального труда<br>
+  <small class="muted">Преподаватель Валиева Р.Р.</small>
+</td>
+<td class="center">102</td>
+</tr>
+
+<tr>
+<td class="center">4</td>
+<td>10:50–11:30</td>
+<td>
+  Психология общения<br>
+  <small class="muted">Преподаватель Марварова А.Р.</small>
+</td>
+<td class="center">210</td>
+</tr>
+
+<tr>
+<td class="center">—</td>
+<td>11:40–12:20</td>
+<td class="center"><strong>Обед</strong></td>
+<td class="center">—</td>
+</tr>
+
+<tr>
+<td class="center">5</td>
+<td>12:25–13:05</td>
+<td>
+  Психология общения<br>
+  <small class="muted">Преподаватель Марварова А.Р.</small>
+</td>
+<td class="center">210</td>
+</tr>
+
+<tr>
+<td class="center">6</td>
+<td>13:15–13:55</td>
+<td>
+  Информационные технологии<br>
+  <small class="muted">Преподаватель Нурисламова Э.И.</small>
+</td>
+<td class="center">408</td>
+</tr>
+
+<tr>
+<td class="center">7</td>
+<td>14:00–14:40</td>
+<td>
+  Информационные технологии<br>
+  <small class="muted">Преподаватель Нурисламова Э.И.</small>
+</td>
+<td class="center">408</td>
+</tr>
+
+<tr>
+<td class="center">8</td>
+<td>14:45–15:25</td>
+<td>
+  История<br>
+  <small class="muted">Преподаватель Шакирова Е.Н.</small>
+</td>
+<td class="center">212</td>
+</tr>
+
 </tbody>
 </table>
-</div>
-
-<div class="note glass">
-  В расписании указаны только занятия, в которых есть изменения.
 </div>
 </section>
 
