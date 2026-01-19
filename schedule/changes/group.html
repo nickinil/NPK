@@ -1,169 +1,106 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Изменения группы — НПК</title>
-
-  <link rel="stylesheet" href="../../assets/styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Изменения — НПК</title>
+<link rel="stylesheet" href="../../assets/styles.css" />
 </head>
 <body>
 
-  <!-- фон -->
-  <div class="bg-orbs" aria-hidden="true">
-    <span class="orb o1"></span>
-    <span class="orb o2"></span>
-    <span class="orb o3"></span>
+<div class="bg-orbs" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
+<header class="topbar glass">
+  <a class="brand" href="../../">
+    <span class="brand__dot"></span>
+    <span class="brand__text">НПК</span>
+    <span class="brand__sub">Изменения в расписании</span>
+  </a>
+
+  <nav class="nav">
+    <a class="nav__link" href="../../">Главная</a>
+    <a class="nav__link" href="../">Расписание</a>
+    <a class="nav__link is-active" href="./">Изменения</a>
+  </nav>
+
+  <div class="actions">
+    <button class="btn btn--ghost" id="themeToggle">🌓 Тема</button>
   </div>
+</header>
 
-  <!-- шапка -->
-  <header class="topbar glass">
-    <a class="brand" href="../../">
-      <span class="brand__dot"></span>
-      <span class="brand__text">НПК</span>
-      <span class="brand__sub">Изменения в расписании</span>
-    </a>
+<main class="wrap">
+<section class="card glass reveal" id="content">
+  <h1 class="h1" id="title">Изменения</h1>
+  <p class="muted" id="date"></p>
+</section>
 
-    <div class="actions">
-      <a class="btn btn--ghost" href="./">← К группам</a>
-      <button class="btn btn--ghost" id="themeToggle" type="button">
-        <span class="icon">🌓</span>
-        <span class="btn__text">Тема</span>
-      </button>
-    </div>
-  </header>
+<footer class="footer">
+  <div class="footer__inner glass">
+    <span>© <span id="year"></span> НПК</span>
+    <span class="muted">Сайт неофициальный · Сделано с любовью ❤️</span>
+  </div>
+</footer>
+</main>
 
-  <!-- контент -->
-  <main class="wrap">
-    <section class="card glass reveal" id="content">
-      <!-- сюда подставится JS -->
-    </section>
-
-    <footer class="footer">
-      <div class="footer__inner glass">
-        <span>© <span id="year"></span> НПК</span>
-        <span class="muted">Сайт неофициальный · Сделано с любовью ❤️</span>
-      </div>
-    </footer>
-  </main>
-
-  <!-- данные изменений -->
+<!-- ДАННЫЕ -->
 <script src="./changes.js"></script>
+
+<!-- РЕНДЕР -->
 <script>
-  const params = new URLSearchParams(location.search);
-  const group = params.get("group");
-  const root = document.getElementById("content");
+const params = new URLSearchParams(location.search);
+const group = params.get("group");
 
-  if (!group) {
-    root.innerHTML = `
-      <h1 class="h1">Группа не выбрана</h1>
-      <a class="btn btn--ghost" href="./">← Назад</a>
+const container = document.getElementById("content");
+const title = document.getElementById("title");
+const dateEl = document.getElementById("date");
+
+if (!group || !window.CHANGES || !CHANGES[group]) {
+  title.textContent = "Изменений нет";
+  dateEl.textContent = "Для данной группы изменений не найдено.";
+} else {
+  const data = CHANGES[group];
+  title.textContent = `Изменения · ${group} группа`;
+  dateEl.textContent = data.date || "";
+
+  const tableWrap = document.createElement("div");
+  tableWrap.className = "glass table-wrap";
+  tableWrap.style.marginTop = "16px";
+
+  const table = document.createElement("table");
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Время</th>
+        <th>Дисциплина</th>
+        <th>Ауд.</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
+
+  const tbody = table.querySelector("tbody");
+
+  data.rows.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td data-label="№">${row.num}</td>
+      <td data-label="Время">${row.time}</td>
+      <td data-label="Дисциплина">${row.subject}</td>
+      <td data-label="Ауд.">${row.room}</td>
     `;
-  } else if (!window.CHANGES || !CHANGES[group]) {
-    root.innerHTML = `
-      <div class="badge">Группа ${group}</div>
-      <h1 class="h1">Изменений нет</h1>
-      <p class="muted">
-        На данный момент для этой группы изменений нет.
-      </p>
-      <div class="btnrow">
-        <a class="btn btn--ghost" href="./">← К списку групп</a>
-      </div>
-    `;
-  } else {
-    const data = CHANGES[group];
+    tbody.appendChild(tr);
+  });
 
-    root.innerHTML = `
-      <div class="badge badge--alt">Группа ${group}</div>
-      <h1 class="h1">Изменения в расписании</h1>
-      <p class="muted">Актуально на ${data.date}</p>
-
-      <table class="glass-mini">
-        <thead>
-          <tr>
-            <th>День</th>
-            <th>Время</th>
-            <th>Дисциплина</th>
-            <th>Ауд.</th>
-            <th>Примечание</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${data.lessons.map(l => `
-            <tr>
-              <td>${l.day}</td>
-              <td>${l.time}</td>
-              <td>${l.subject}</td>
-              <td>${l.room || "—"}</td>
-              <td>${l.note || ""}</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-
-      <div class="btnrow" style="margin-top:16px">
-        <a class="btn btn--ghost" href="./">← К списку групп</a>
-      </div>
-    `;
-  }
+  tableWrap.appendChild(table);
+  container.appendChild(tableWrap);
+}
 </script>
 
-  <!-- логика -->
-  <script>
-    const params = new URLSearchParams(location.search);
-    const group = params.get("group");
-    const data = window.CHANGES ? CHANGES[group] : null;
-
-    const root = document.getElementById("content");
-
-    if (!group || !data) {
-      root.innerHTML = `
-        <h1 class="h1">Изменений нет</h1>
-        <p class="muted">
-          Для выбранной группы изменения отсутствуют.
-        </p>
-        <div class="btnrow">
-          <a class="btn btn--ghost" href="./">← Вернуться к списку</a>
-        </div>
-      `;
-    } else {
-      root.innerHTML = `
-        <div class="badge badge--alt">Группа ${group}</div>
-        <h1 class="h1">Изменения в расписании</h1>
-        <p class="muted">Актуально на ${data.date}</p>
-
-        <div class="table-wrap">
-          <table class="table glass-mini">
-            <thead>
-              <tr>
-                <th>День</th>
-                <th>Время</th>
-                <th>Дисциплина</th>
-                <th>Ауд.</th>
-                <th>Примечание</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data.lessons.map(l => `
-                <tr>
-                  <td data-label="День">${l.day}</td>
-                  <td data-label="Время">${l.time}</td>
-                  <td data-label="Дисциплина">${l.subject}</td>
-                  <td data-label="Ауд.">${l.room || "—"}</td>
-                  <td data-label="Примечание">${l.note || ""}</td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </div>
-
-        <div class="btnrow" style="margin-top:16px">
-          <a class="btn btn--ghost" href="./">← К списку групп</a>
-        </div>
-      `;
-    }
-  </script>
-
-  <script src="../../assets/app.js"></script>
+<script src="../../assets/app.js"></script>
 </body>
 </html>
