@@ -1,39 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Изменения — НПК</title>
+<link rel="stylesheet" href="../../assets/styles.css" />
+</head>
+<body>
+
+<div class="bg-orbs" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
+<header class="topbar glass">
+  <a class="brand" href="../../">
+    <span class="brand__dot"></span>
+    <span class="brand__text">НПК</span>
+    <span class="brand__sub">Изменения в расписании</span>
+  </a>
+
+  <nav class="nav">
+    <a class="nav__link" href="../../">Главная</a>
+    <a class="nav__link" href="../">Расписание</a>
+    <a class="nav__link is-active" href="./">Изменения</a>
+  </nav>
+
+  <div class="actions">
+    <button class="btn btn--ghost" id="themeToggle">🌓 Тема</button>
+  </div>
+</header>
+
+<main class="wrap">
+<section class="card glass reveal" id="content">
+  <h1 class="h1" id="title">Изменения</h1>
+  <p class="muted" id="date"></p>
+</section>
+
+<footer class="footer">
+  <div class="footer__inner glass">
+    <span>© <span id="year"></span> НПК</span>
+    <span class="muted">Сайт неофициальный · Сделано с любовью ❤️</span>
+  </div>
+</footer>
+</main>
+
+<!-- ДАННЫЕ -->
+<script src="./changes.js"></script>
+
+<!-- РЕНДЕР -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+const params = new URLSearchParams(location.search);
+const group = params.get("group");
 
-  const params = new URLSearchParams(window.location.search);
-  const group = params.get("group");
+const container = document.getElementById("content");
+const title = document.getElementById("title");
+const dateEl = document.getElementById("date");
 
-  const container = document.getElementById("content");
-  const title = document.getElementById("title");
-  const dateEl = document.getElementById("date");
-
-  if (!container || !title || !dateEl) {
-    document.body.innerHTML = "<h2 style='color:white;padding:20px'>Ошибка разметки HTML</h2>";
-    return;
-  }
-
-  if (!group || !window.CHANGES || !CHANGES[group]) {
-    title.textContent = "Изменений нет";
-    dateEl.textContent = "Для данной группы изменений не найдено.";
-    return;
-  }
-
+if (!group || !window.CHANGES || !CHANGES[group]) {
+  title.textContent = "Изменений нет";
+  dateEl.textContent = "Для данной группы изменений не найдено.";
+} else {
   const data = CHANGES[group];
 
   title.textContent = `Изменения · ${group} группа`;
   dateEl.textContent = data.date || "";
 
-  const section = document.createElement("section");
-  section.className = "day";
-  section.style.marginTop = "20px";
-
-  const h2 = document.createElement("h2");
-  h2.textContent = "Изменения";
-  section.appendChild(h2);
-
-  const wrap = document.createElement("div");
-  wrap.className = "glass table-wrap";
+  const tableWrap = document.createElement("div");
+  tableWrap.className = "glass table-wrap";
+  tableWrap.style.marginTop = "16px";
 
   const table = document.createElement("table");
   table.innerHTML = `
@@ -50,20 +86,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const tbody = table.querySelector("tbody");
 
-  data.rows.forEach(r => {
+  data.rows.forEach(row => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td data-label="№">${r[0] ?? "—"}</td>
-      <td data-label="Время">${r[1] ?? "—"}</td>
-      <td data-label="Дисциплина">${r[2] ?? "—"}</td>
-      <td data-label="Ауд.">${r[3] ?? "—"}</td>
+      <td data-label="№">${row[0]}</td>
+      <td data-label="Время">${row[1]}</td>
+      <td data-label="Дисциплина">${row[2]}</td>
+      <td data-label="Ауд.">${row[3]}</td>
     `;
     tbody.appendChild(tr);
   });
 
-  wrap.appendChild(table);
-  section.appendChild(wrap);
-  container.appendChild(section);
-
-});
+  tableWrap.appendChild(table);
+  container.appendChild(tableWrap);
+}
 </script>
+
+<script src="../../assets/app.js"></script>
+</body>
+</html>
