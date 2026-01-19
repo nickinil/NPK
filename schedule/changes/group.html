@@ -1,15 +1,24 @@
 <script>
-const params = new URLSearchParams(location.search);
-const group = params.get("group");
+document.addEventListener("DOMContentLoaded", () => {
 
-const container = document.getElementById("content");
-const title = document.getElementById("title");
-const dateEl = document.getElementById("date");
+  const params = new URLSearchParams(window.location.search);
+  const group = params.get("group");
 
-if (!group || !window.CHANGES || !CHANGES[group]) {
-  title.textContent = "Изменений нет";
-  dateEl.textContent = "Для данной группы изменений не найдено.";
-} else {
+  const container = document.getElementById("content");
+  const title = document.getElementById("title");
+  const dateEl = document.getElementById("date");
+
+  if (!container || !title || !dateEl) {
+    document.body.innerHTML = "<h2 style='color:white;padding:20px'>Ошибка разметки HTML</h2>";
+    return;
+  }
+
+  if (!group || !window.CHANGES || !CHANGES[group]) {
+    title.textContent = "Изменений нет";
+    dateEl.textContent = "Для данной группы изменений не найдено.";
+    return;
+  }
+
   const data = CHANGES[group];
 
   title.textContent = `Изменения · ${group} группа`;
@@ -44,10 +53,10 @@ if (!group || !window.CHANGES || !CHANGES[group]) {
   data.rows.forEach(r => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td data-label="№">${r[0]}</td>
-      <td data-label="Время">${r[1]}</td>
-      <td data-label="Дисциплина">${r[2]}</td>
-      <td data-label="Ауд.">${r[3]}</td>
+      <td data-label="№">${r[0] ?? "—"}</td>
+      <td data-label="Время">${r[1] ?? "—"}</td>
+      <td data-label="Дисциплина">${r[2] ?? "—"}</td>
+      <td data-label="Ауд.">${r[3] ?? "—"}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -55,5 +64,6 @@ if (!group || !window.CHANGES || !CHANGES[group]) {
   wrap.appendChild(table);
   section.appendChild(wrap);
   container.appendChild(section);
-}
+
+});
 </script>
