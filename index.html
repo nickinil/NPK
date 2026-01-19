@@ -8,57 +8,133 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <div class="bg-orbs" aria-hidden="true">
-    <span class="orb o1"></span>
-    <span class="orb o2"></span>
-    <span class="orb o3"></span>
+
+<!-- ===== BACKGROUND ===== -->
+<div class="bg-orbs" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
+<!-- ===== MODAL WARNING ===== -->
+<div id="disclaimerOverlay" class="disclaimer-overlay">
+  <div class="disclaimer glass">
+    <h2>Важно</h2>
+    <p>
+      Этот сайт является <strong>неофициальным</strong> и создаётся
+      <strong>студентом Нефтекамского Педагогического Колледжа</strong>.
+    </p>
+    <p>
+      Информация на сайте носит справочный характер.<br>
+      Возможны неточности и ошибки — автор тоже человек 🙂
+    </p>
+    <p class="muted">
+      Официальную информацию следует проверять на официальных ресурсах колледжа.
+    </p>
+    <button class="btn btn--primary" id="acceptDisclaimer">
+      Понятно
+    </button>
   </div>
+</div>
 
-  <header class="topbar glass">
-    <a class="brand" href="./">
-      <span class="brand__dot"></span>
-      <span class="brand__text">НПК</span>
-      <span class="brand__sub">Нефтекамский Педагогический Колледж</span>
-    </a>
+<!-- ===== HEADER ===== -->
+<header class="topbar glass">
+  <a class="brand" href="./">
+    <span class="brand__dot"></span>
+    <span class="brand__text">НПК</span>
+    <span class="brand__sub">Нефтекамский Педагогический Колледж</span>
+  </a>
 
-    <nav class="nav">
-      <a class="nav__link is-active" href="./">Главная</a>
-      <a class="nav__link" href="./schedule/">Расписание</a>
-    </nav>
+  <nav class="nav">
+    <a class="nav__link is-active" href="./">Главная</a>
+    <a class="nav__link" href="./schedule/">Расписание</a>
+  </nav>
 
-    <div class="actions">
-      <button class="btn btn--ghost" id="themeToggle" type="button" aria-label="Переключить тему">
-        <span class="icon">🌓</span>
-        <span class="btn__text">Тема</span>
-      </button>
-    </div>
-  </header>
+  <div class="actions">
+    <button class="btn btn--ghost" id="themeToggle" type="button">
+      🌓 Тема
+    </button>
+  </div>
+</header>
 
-  <main class="wrap">
-    <section class="hero hero--single">
-      <div class="card glass reveal">
-        <div class="badge">Неофициальный сайт</div>
-        <h1 class="h1">Нефтекамский Педагогический Колледж</h1>
-        <p class="lead muted">
-          Информация и расписание учебных групп.
-        </p>
+<!-- ===== MAIN ===== -->
+<main class="wrap">
+  <section class="hero hero--single">
+    <div class="card glass reveal">
+      <div class="badge">Неофициальный сайт</div>
+      <h1 class="h1">Нефтекамский Педагогический Колледж</h1>
+      <p class="lead muted">
+        Информация и расписание учебных групп.
+      </p>
 
-        <div class="btnrow">
-          <a class="btn btn--primary" href="./schedule/">Перейти к расписанию</a>
-        </div>
+      <div class="btnrow">
+        <a class="btn btn--primary" href="./schedule/">Перейти к расписанию</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-<footer class="footer">
-  <div class="footer__inner glass">
-    <span>© <span id="year"></span> НПК</span>
-    <span class="muted">
-      Сайт неофициальный · Сделано с любовью ❤️
-    </span>
-  </div>
-</footer>
-  </main>
+  <footer class="footer">
+    <div class="footer__inner glass">
+      <span>© <span id="year"></span> НПК</span>
+      <span class="muted">
+        Сайт неофициальный · Сделано с любовью ❤️
+      </span>
+    </div>
+  </footer>
+</main>
 
-  <script src="assets/app.js"></script>
+<!-- ===== SCRIPTS ===== -->
+<script src="assets/app.js"></script>
+
+<script>
+/* ===== DISCLAIMER LOGIC ===== */
+const overlay = document.getElementById("disclaimerOverlay");
+const acceptBtn = document.getElementById("acceptDisclaimer");
+
+if (!localStorage.getItem("npkDisclaimerAccepted")) {
+  overlay.style.display = "flex";
+}
+
+acceptBtn.onclick = () => {
+  localStorage.setItem("npkDisclaimerAccepted", "true");
+  overlay.classList.add("hide");
+  setTimeout(() => overlay.remove(), 300);
+};
+</script>
+
+<style>
+/* ===== DISCLAIMER STYLES ===== */
+.disclaimer-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.disclaimer{
+  max-width:420px;
+  padding:22px;
+  text-align:center;
+  animation:fadeUp .35s ease;
+}
+.disclaimer h2{
+  margin:0 0 10px;
+}
+.disclaimer p{
+  margin:10px 0;
+}
+.disclaimer-overlay.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+</style>
+
 </body>
 </html>
