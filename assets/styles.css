@@ -359,3 +359,37 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 [data-theme="light"] .sheet-wrap::after{
   background: none;
 }
+
+
+.sheet-page{
+  width:100%;
+  margin-top:16px;
+
+  /* НЕТ внутреннего скролла */
+  overflow:visible;
+}
+
+/* iframe растягивается по высоте контента */
+.sheet-page iframe{
+  width:100%;
+  min-height:1800px;     /* подбери один раз */
+  border:none;
+}
+
+/* ===== МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
+@media (max-width: 768px){
+
+  .sheet-page{
+    overflow-x:hidden;
+  }
+
+  .sheet-page iframe{
+    /* уменьшаем таблицу целиком */
+    width:1200px;              /* виртуальная ширина таблицы */
+    transform: scale(.8);
+    transform-origin: top left;
+
+    /* компенсируем уменьшение */
+    height:2200px;
+  }
+}
