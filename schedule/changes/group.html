@@ -48,7 +48,65 @@
   </main>
 
   <!-- данные изменений -->
-  <script src="./changes.js"></script>
+<script src="./changes.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const group = params.get("group");
+  const root = document.getElementById("content");
+
+  if (!group) {
+    root.innerHTML = `
+      <h1 class="h1">Группа не выбрана</h1>
+      <a class="btn btn--ghost" href="./">← Назад</a>
+    `;
+  } else if (!window.CHANGES || !CHANGES[group]) {
+    root.innerHTML = `
+      <div class="badge">Группа ${group}</div>
+      <h1 class="h1">Изменений нет</h1>
+      <p class="muted">
+        На данный момент для этой группы изменений нет.
+      </p>
+      <div class="btnrow">
+        <a class="btn btn--ghost" href="./">← К списку групп</a>
+      </div>
+    `;
+  } else {
+    const data = CHANGES[group];
+
+    root.innerHTML = `
+      <div class="badge badge--alt">Группа ${group}</div>
+      <h1 class="h1">Изменения в расписании</h1>
+      <p class="muted">Актуально на ${data.date}</p>
+
+      <table class="glass-mini">
+        <thead>
+          <tr>
+            <th>День</th>
+            <th>Время</th>
+            <th>Дисциплина</th>
+            <th>Ауд.</th>
+            <th>Примечание</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.lessons.map(l => `
+            <tr>
+              <td>${l.day}</td>
+              <td>${l.time}</td>
+              <td>${l.subject}</td>
+              <td>${l.room || "—"}</td>
+              <td>${l.note || ""}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+
+      <div class="btnrow" style="margin-top:16px">
+        <a class="btn btn--ghost" href="./">← К списку групп</a>
+      </div>
+    `;
+  }
+</script>
 
   <!-- логика -->
   <script>
