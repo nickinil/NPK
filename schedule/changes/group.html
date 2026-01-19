@@ -1,1 +1,40 @@
+<div class="card glass reveal" id="content"></div>
 
+<script src="./changes.js"></script>
+<script>
+  const g = new URLSearchParams(location.search).get("group");
+  const data = CHANGES[g];
+  const root = document.getElementById("content");
+
+  if (!data) {
+    root.innerHTML = `<p class="muted">Изменений нет</p>`;
+  } else {
+    root.innerHTML = `
+      <h1 class="h1">${g} группа</h1>
+      <p class="muted">Изменения на ${data.date}</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>День</th>
+            <th>Время</th>
+            <th>Дисциплина</th>
+            <th>Ауд.</th>
+            <th>Примечание</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.lessons.map(l => `
+            <tr>
+              <td>${l.day}</td>
+              <td>${l.time}</td>
+              <td>${l.subject}</td>
+              <td>${l.room}</td>
+              <td>${l.note}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+  }
+</script>
