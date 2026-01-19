@@ -372,7 +372,7 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 /* iframe растягивается по высоте контента */
 .sheet-page iframe{
   width:100%;
-  min-height:1800px;     /* подбери один раз */
+  min-height:2500px;     /* подбери один раз */
   border:none;
 }
 
