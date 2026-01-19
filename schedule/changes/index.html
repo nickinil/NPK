@@ -8,115 +8,104 @@
 </head>
 <body>
 
-  <!-- фон -->
-  <div class="bg-orbs" aria-hidden="true">
-    <span class="orb o1"></span>
-    <span class="orb o2"></span>
-    <span class="orb o3"></span>
+<div class="bg-orbs" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
+<header class="topbar glass">
+  <a class="brand" href="../../">
+    <span class="brand__dot"></span>
+    <span class="brand__text">НПК</span>
+    <span class="brand__sub">Изменения в расписании</span>
+  </a>
+
+  <nav class="nav">
+    <a class="nav__link" href="../../">Главная</a>
+    <a class="nav__link" href="../">Расписание</a>
+    <a class="nav__link" href="../main/">Основное</a>
+    <a class="nav__link is-active" href="./">Изменения</a>
+  </nav>
+
+  <div class="actions">
+    <button class="btn btn--ghost" id="themeToggle">
+      🌓 <span class="btn__text">Тема</span>
+    </button>
+  </div>
+</header>
+
+<main class="wrap">
+<section class="card glass reveal">
+  <div class="row">
+    <div>
+      <h1 class="h1">Изменения в расписании</h1>
+      <p class="muted">Выберите группу, чтобы посмотреть актуальные изменения.</p>
+    </div>
+
+    <div class="searchbox glass-mini">
+      🔎
+      <input id="groupSearch" type="text" placeholder="Поиск группы: 11, 25, 48..." />
+    </div>
   </div>
 
-  <!-- шапка -->
-  <header class="topbar glass">
-    <a class="brand" href="../../">
-      <span class="brand__dot"></span>
-      <span class="brand__text">НПК</span>
-      <span class="brand__sub">Изменения в расписании</span>
-    </a>
+  <div class="groups" id="groups">
+    <!-- ВАЖНО: ТОЛЬКО data-group -->
+    <a class="group glass-mini" data-group="11">11 группа</a>
+    <a class="group glass-mini" data-group="13">13 группа</a>
+    <a class="group glass-mini" data-group="14">14 группа</a>
+    <a class="group glass-mini" data-group="15">15 группа</a>
+    <a class="group glass-mini" data-group="17">17 группа</a>
+    <a class="group glass-mini" data-group="18">18 группа</a>
 
-    <nav class="nav">
-      <a class="nav__link" href="../../">Главная</a>
-      <a class="nav__link" href="../">Расписание</a>
-      <a class="nav__link" href="../main/">Основное</a>
-      <a class="nav__link is-active" href="./">Изменения</a>
-    </nav>
+    <a class="group glass-mini" data-group="21">21 группа</a>
+    <a class="group glass-mini" data-group="23">23 группа</a>
+    <a class="group glass-mini" data-group="25">25 группа</a>
+    <a class="group glass-mini" data-group="27">27 группа</a>
+    <a class="group glass-mini" data-group="28">28 группа</a>
+    <a class="group glass-mini" data-group="29">29 группа</a>
+    <a class="group glass-mini" data-group="31">31 группа</a>
+    <a class="group glass-mini" data-group="33">33 группа</a>
+    <a class="group glass-mini" data-group="35">35 группа</a>
+    <a class="group glass-mini" data-group="36">36 группа</a>
+    <a class="group glass-mini" data-group="37">37 группа</a>
+    <a class="group glass-mini" data-group="38">38 группа</a>
+    <a class="group glass-mini" data-group="43">43 группа</a>
+    <a class="group glass-mini" data-group="44">44 группа</a>
+    <a class="group glass-mini" data-group="45">45 группа</a>
+    <a class="group glass-mini" data-group="48">48 группа</a>
+  </div>
+</section>
 
-    <div class="actions">
-      <button class="btn btn--ghost" id="themeToggle" type="button">
-        <span class="icon">🌓</span>
-        <span class="btn__text">Тема</span>
-      </button>
-    </div>
-  </header>
+<footer class="footer">
+  <div class="footer__inner glass">
+    <span>© <span id="year"></span> НПК</span>
+    <span class="muted">Сайт неофициальный · Сделано с любовью ❤️</span>
+  </div>
+</footer>
+</main>
 
-  <!-- контент -->
-  <main class="wrap">
-    <section class="card glass reveal">
-      <div class="row">
-        <div>
-          <h1 class="h1">Изменения в расписании</h1>
-          <p class="muted">
-            Выберите группу, чтобы посмотреть актуальные изменения.
-          </p>
-        </div>
+<!-- ДАННЫЕ -->
+<script src="./changes.js"></script>
 
-        <div class="searchbox glass-mini">
-          <span class="icon">🔎</span>
-          <input
-            id="groupSearch"
-            type="text"
-            placeholder="Поиск группы: 11, 25, 48..."
-            autocomplete="off"
-          />
-        </div>
-      </div>
+<!-- ЛОГИКА КНОПОК -->
+<script>
+document.querySelectorAll(".group").forEach(btn => {
+  const group = btn.dataset.group;
 
-      <!-- список групп -->
-      <div class="groups" id="groups">
-  <a class="group glass-mini" href="group.html?group=11">11 группа</a>
-  <a class="group glass-mini" href="group.html?group=13">13 группа</a>
-  <a class="group glass-mini" href="group.html?group=14">14 группа</a>
-  <a class="group glass-mini" href="group.html?group=15">15 группа</a>
-  <a class="group glass-mini" href="group.html?group=17">17 группа</a>
-  <a class="group glass-mini" href="group.html?group=18">18 группа</a>
+  if (window.CHANGES && window.CHANGES[group]) {
+    // есть изменения
+    btn.href = `group.html?group=${group}`;
+    btn.classList.remove("is-hidden");
+  } else {
+    // нет изменений
+    btn.style.opacity = "0.4";
+    btn.style.pointerEvents = "none";
+    btn.textContent += " 🔒";
+  }
+});
+</script>
 
-  <a class="group glass-mini" href="group.html?group=21">21 группа</a>
-  <a class="group glass-mini" href="group.html?group=23">23 группа</a>
-  <a class="group glass-mini" href="group.html?group=25">25 группа</a>
-  <a class="group glass-mini" href="group.html?group=27">27 группа</a>
-  <a class="group glass-mini" href="group.html?group=28">28 группа</a>
-  <a class="group glass-mini" href="group.html?group=29">29 группа</a>
-  <a class="group glass-mini" href="group.html?group=31">31 группа</a>
-  <a class="group glass-mini" href="group.html?group=33">33 группа</a>
-  <a class="group glass-mini" href="group.html?group=35">35 группа</a>
-  <a class="group glass-mini" href="group.html?group=36">36 группа</a>
-  <a class="group glass-mini" href="group.html?group=37">37 группа</a>
-  <a class="group glass-mini" href="group.html?group=38">38 группа</a>
-  <a class="group glass-mini" href="group.html?group=43">43 группа</a>
-  <a class="group glass-mini" href="group.html?group=44">44 группа</a>
-  <a class="group glass-mini" href="group.html?group=45">45 группа</a>
-  <a class="group glass-mini" href="group.html?group=48">48 группа</a>
-</div>
-    </section>
-
-    <!-- футер -->
-    <footer class="footer">
-      <div class="footer__inner glass">
-        <span>© <span id="year"></span> НПК</span>
-        <span class="muted">
-          Сайт неофициальный · Сделано с любовью ❤️
-        </span>
-      </div>
-    </footer>
-  </main>
-
-  <!-- логика изменений -->
-  <script src="./changes.js"></script>
-
-  <!-- логика кнопок -->
-  <script>
-    document.querySelectorAll(".group").forEach(btn => {
-      const g = btn.dataset.group;
-
-      if (window.CHANGES && CHANGES[g]) {
-        btn.href = `group.html?group=${g}`;
-        btn.textContent = `${g} группа`;
-      } else {
-        btn.classList.add("is-hidden");
-      }
-    });
-  </script>
-
-  <!-- общий js -->
-  <script src="../../assets/app.js"></script>
+<script src="../../assets/app.js"></script>
 </body>
 </html>
