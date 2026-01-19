@@ -278,3 +278,43 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
   height:100%;
   border:none;
 }
+
+
+
+.sheet-wrap{
+  width:100%;
+  max-width:100%;
+  height:75vh;              /* высота таблицы */
+  margin-top:16px;
+
+  display:flex;
+  justify-content:center;   /* центр по горизонтали */
+  align-items:stretch;
+
+  border-radius:16px;
+  overflow:hidden;
+
+  background: rgba(0,0,0,.35);   /* тёмная подложка */
+  border:1px solid var(--border);
+}
+
+/* сам iframe */
+.sheet-wrap iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+/* ПК — чуть шире и выше */
+@media (min-width: 1024px){
+  .sheet-wrap{
+    height:80vh;
+  }
+}
+
+/* мобильные */
+@media (max-width: 600px){
+  .sheet-wrap{
+    height:70vh;
+  }
+}
