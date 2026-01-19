@@ -390,6 +390,6 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
     transform-origin: top left;
 
     /* компенсируем уменьшение */
-    height:3000px;
+    height:4000px;
   }
 }
