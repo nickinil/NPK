@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>31 группа — основное расписание</title>
+
+<style>
+:root{
+  --bg:#0b1020;
+  --glass: rgba(255,255,255,.10);
+  --glass-weak: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.18);
+  --text: rgba(255,255,255,.94);
+  --muted: rgba(255,255,255,.65);
+  --accent: #7c5cff;
+  --radius: 18px;
+  --blur: 16px;
+}
+[data-theme="light"]{
+  --bg:#f5f6fb;
+  --glass: rgba(255,255,255,.85);
+  --glass-weak: rgba(255,255,255,.65);
+  --border: rgba(10,18,40,.12);
+  --text:#0b1020;
+  --muted:#4a4f6a;
+  --accent:#5b4bff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(900px 500px at 20% 0%, #1a2350, transparent),
+    radial-gradient(900px 500px at 80% 20%, #2b1658, transparent),
+    var(--bg);
+  color:var(--text);
+}
+.wrap{max-width:1100px;margin:auto;padding:20px 14px 70px}
+.glass{
+  background: linear-gradient(180deg, var(--glass), var(--glass-weak));
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(var(--blur));
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+.header{
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+h1{margin:0;font-size:26px}
+.subtitle{color:var(--muted);font-size:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
+  padding:9px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  color:var(--text);
+  cursor:pointer;
+  font-weight:600;
+  text-decoration:none;
+}
+.day{margin-top:28px}
+.day h2{margin:0 0 10px;font-size:20px}
+.table-wrap{overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th,td{
+  padding:11px 12px;
+  border-bottom:1px solid var(--border);
+  font-size:14px;
+}
+th{background:rgba(0,0,0,.18)}
+@media(max-width:720px){
+  table,thead,tbody,th,td,tr{display:block}
+  thead{display:none}
+  tr{
+    padding:12px;
+    margin-bottom:12px;
+    border-radius:14px;
+    background:var(--glass);
+    border:1px solid var(--border);
+  }
+  td{border:none}
+  td::before{
+    content:attr(data-label);
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+  }
+}
+footer{
+  margin-top:40px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<div class="glass header">
+  <div>
+    <h1>31 группа · 2 семестр</h1>
+    <div class="subtitle">Основное расписание · 2025–2026 уч. год</div>
+  </div>
+  <div class="actions">
+    <a class="btn" href="./">← К списку групп</a>
+    <a class="btn" href="../../">← На главную</a>
+    <button class="btn" id="themeToggle">🌓 Тема</button>
+  </div>
+</div>
+
+<!-- ПОНЕДЕЛЬНИК -->
+<section class="day">
+<h2>Понедельник</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td data-label="№">1</td><td data-label="Время">8:30–9:10</td><td data-label="Дисциплина">Разговоры о важном / Классный час</td><td data-label="Ауд.">404</td></tr>
+<tr><td>2</td><td>9:15–9:55</td><td>МДК 01.06 Обществознание с МП</td><td>212</td></tr>
+<tr><td>3</td><td>10:05–10:45</td><td>МДК 01.06 Обществознание с МП</td><td>212</td></tr>
+<tr><td>4</td><td>10:50–11:30</td><td>Детская литература с практ. по ВЧ</td><td>404</td></tr>
+<tr><td>5</td><td>11:40–12:20</td><td>Детская литература с практ. по ВЧ</td><td>404</td></tr>
+<tr><td>—</td><td>12:25–13:05</td><td>Обед</td><td>—</td></tr>
+<tr><td>6</td><td>13:15–13:55</td><td>Физкультура</td><td>—</td></tr>
+<tr><td>7</td><td>14:00–14:40</td><td>Физкультура</td><td>—</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- ВТОРНИК -->
+<section class="day">
+<h2>Вторник</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td>1</td><td>8:30–9:15</td><td>Основы обучения лиц с ООП</td><td>213</td></tr>
+<tr><td>2</td><td>9:20–10:05</td><td>Основы обучения лиц с ООП</td><td>213</td></tr>
+<tr><td>3</td><td>10:15–11:00</td><td>МДК 03.02 ТИМОД кл. рук.</td><td>213</td></tr>
+<tr><td>4</td><td>11:05–11:50</td><td>МДК 03.02 ТИМОД кл. рук.</td><td>213</td></tr>
+<tr><td>5</td><td>12:00–12:45</td><td>Педагогическая психология</td><td>210</td></tr>
+<tr><td>—</td><td>12:50–13:35</td><td>Обед</td><td>—</td></tr>
+<tr><td>6</td><td>13:45–14:30</td><td>Педагогическая психология</td><td>210</td></tr>
+<tr><td>7</td><td>14:35–15:20</td><td>МДК 01.02 Русский язык с МП</td><td>205</td></tr>
+<tr><td>8</td><td>15:25–16:10</td><td>МДК 01.02 Русский язык с МП</td><td>205</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- СРЕДА -->
+<section class="day">
+<h2>Среда</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td>1</td><td>8:30–9:15</td><td>Основы обучения лиц с ООП</td><td>213</td></tr>
+<tr><td>2</td><td>9:20–10:05</td><td>Основы обучения лиц с ООП</td><td>213</td></tr>
+<tr><td>3</td><td>10:15–11:00</td><td>МДК 01.04 ТОНКМ с МП</td><td>206</td></tr>
+<tr><td>—</td><td>11:05–11:50</td><td>—</td><td>—</td></tr>
+<tr><td>—</td><td>12:00–12:45</td><td>Обед</td><td>—</td></tr>
+<tr><td>4</td><td>12:50–13:35</td><td>Педагогическая психология</td><td>210</td></tr>
+<tr><td>5</td><td>13:45–14:30</td><td>Педагогическая психология</td><td>210</td></tr>
+<tr><td>6</td><td>14:35–15:20</td><td>МДК 01.07 Методика обуч. техн.</td><td>304</td></tr>
+<tr><td>7</td><td>15:25–16:10</td><td>МДК 01.07 Методика обуч. техн.</td><td>304</td></tr>
+<tr><td>8</td><td>16:15–17:00</td><td>МДК 04.01 ТИМОД дисципл. ХЭЦ</td><td>304</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- ЧЕТВЕРГ -->
+<section class="day">
+<h2>Четверг</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td colspan="4">ПРАКТИКА</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- ПЯТНИЦА -->
+<section class="day">
+<h2>Пятница</h2>
+<div class="glass table-wrap">
+<table><tbody>
+<tr><td>1</td><td>8:30–9:15</td><td>МДК 01.05 Естествознание с МП</td><td>410</td></tr>
+<tr><td>2</td><td>9:20–10:05</td><td>МДК 01.05 Естествознание с МП</td><td>410</td></tr>
+<tr><td>3</td><td>10:15–11:00</td><td>МДК 04.01 ТИМОД дисципл. ХЭЦ</td><td>302</td></tr>
+<tr><td>4</td><td>11:05–11:50</td><td>Иностранный язык</td><td>106</td></tr>
+<tr><td>5</td><td>12:00–12:45</td><td>Иностранный язык</td><td>106</td></tr>
+<tr><td>—</td><td>12:50–13:35</td><td>Обед</td><td>—</td></tr>
+<tr><td>6</td><td>13:45–14:30</td><td>МДК 01.04 ТОНКМ с МП</td><td>102</td></tr>
+<tr><td>7</td><td>14:35–15:20</td><td>Основы организации внеурочн. раб.</td><td>301</td></tr>
+<tr><td>8</td><td>15:25–16:10</td><td>Основы организации внеурочн. раб.</td><td>301</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<footer>
+  <span>Неофициальный сайт</span>
+  <span>Сделано с любовью ❤️</span>
+</footer>
+
+</div>
+
+<script>
+const root=document.documentElement;
+const t=document.getElementById("themeToggle");
+if(localStorage.theme) root.dataset.theme=localStorage.theme;
+t.onclick=()=>{
+  root.dataset.theme = root.dataset.theme==="light" ? "dark" : "light";
+  localStorage.theme = root.dataset.theme;
+};
+</script>
+
+</body>
+</html>
