@@ -89,10 +89,10 @@ if (!group || !window.CHANGES || !CHANGES[group]) {
   data.rows.forEach(row => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td data-label="№">${row[0]}</td>
-      <td data-label="Время">${row[1]}</td>
-      <td data-label="Дисциплина">${row[2]}</td>
-      <td data-label="Ауд.">${row[3]}</td>
+      <td data-label="№">${row.num}</td>
+      <td data-label="Время">${row.time}</td>
+      <td data-label="Дисциплина">${row.subject}</td>
+      <td data-label="Ауд.">${row.room}</td>
     `;
     tbody.appendChild(tr);
   });
