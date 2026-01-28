@@ -684,6 +684,10 @@ function openSchedule(view){
   scheduleDetails.forEach(d=>d.classList.remove("is-active"));
   setTimeout(()=>document.body.classList.add("orbiting"),400);
   setTimeout(()=>{
+    if(view==="changes"){
+      window.location.href="main/indexChanges.html";
+      return;
+    }
     if(view==="main"){
       window.location.href="main/indexMain.html";
       return;
