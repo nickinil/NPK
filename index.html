@@ -6,6 +6,7 @@
 <title>НПК</title>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap");
 /* ================= ROOT ================= */
 :root{
   --bg:#0b1020;
@@ -14,22 +15,76 @@
   --border:rgba(255,255,255,.22);
   --text:rgba(255,255,255,.96);
   --muted:rgba(255,255,255,.6);
-  --accent:#a78bfa;
+  --accent:#67e8f9;
   --blur:18px;
   --radius:22px;
+  --page-max:900px;
+  --page-pad:20px;
+  --gap:16px;
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto;
   background:
-    radial-gradient(900px 500px at 10% 0%, #1a2350, transparent),
-    radial-gradient(900px 500px at 90% 20%, #3b1a5a, transparent),
+    radial-gradient(900px 500px at 12% -10%, #1b2b64, transparent),
+    radial-gradient(900px 500px at 90% 15%, #1f5b6e, transparent),
+    radial-gradient(900px 900px at 10% 90%, #1e2a45, transparent),
     var(--bg);
   color:var(--text);
   overflow:hidden;
+  letter-spacing:.2px;
+}
+
+.bg-orb{
+  position:fixed;
+  top:50%;
+  left:50%;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  filter:blur(18px);
+  opacity:.45;
+  z-index:0;
+  transition:transform 1.2s cubic-bezier(.22,1,.36,1),opacity .6s ease;
+  pointer-events:none;
+}
+
+.orb-purple{
+  --tx:-120px;
+  --ty:-160px;
+  background:radial-gradient(circle at 30% 30%, rgba(167,139,250,.75), rgba(167,139,250,.2) 55%, transparent 70%);
+  transform:translate(-50%,-50%) translate(var(--tx),var(--ty));
+}
+
+.orb-cyan{
+  --tx:260px;
+  --ty:240px;
+  background:radial-gradient(circle at 30% 30%, rgba(103,232,249,.75), rgba(103,232,249,.2) 55%, transparent 70%);
+  transform:translate(-50%,-50%) translate(var(--tx),var(--ty));
+}
+
+body[data-tab="1"] .orb-purple{
+  --tx:80px;
+  --ty:-220px;
+}
+
+body[data-tab="1"] .orb-cyan{
+  --tx:-40px;
+  --ty:320px;
+}
+
+body[data-state="loading"] .orb-purple,
+body[data-state="loading"] .orb-cyan{
+  opacity:.4;
+  animation:orbFloat 3.6s ease-in-out infinite;
+}
+
+body.orbiting .orb-purple,
+body.orbiting .orb-cyan{
+  animation:orbFloat 3.6s ease-in-out infinite;
 }
 
 /* ================= GLASS ================= */
@@ -45,6 +100,8 @@ body{
 .app{
   height:100vh;
   display:flex;
+  position:relative;
+  z-index:1;
 }
 
 /* ================= SIDEBAR (PC) ================= */
@@ -55,6 +112,7 @@ body{
   padding:16px;
   border-radius:28px;
   margin:16px;
+  transition:opacity .35s ease,transform .45s ease;
 }
 
 .sidebar a{
@@ -63,11 +121,13 @@ body{
   color:var(--muted);
   text-decoration:none;
   cursor:pointer;
+  transition:background .25s ease,color .25s ease,transform .25s ease;
 }
 
 .sidebar a.active{
   background:rgba(255,255,255,.22);
   color:var(--text);
+  transform:translateX(2px);
 }
 
 /* ================= MAIN ================= */
@@ -78,23 +138,56 @@ body{
 }
 
 .pages{
-  display:flex;
-  width:200%;
+  position:relative;
   height:100%;
-  transition:.45s cubic-bezier(.22,1,.36,1);
 }
 
 .page{
+  position:absolute;
+  inset:0;
   width:100%;
-  padding:20px;
+  padding:var(--page-pad);
   overflow-y:auto;
+  opacity:0;
+  pointer-events:none;
+  transform:translateX(24px);
+  transition:opacity .35s ease,transform .45s ease;
+}
+
+.page.is-active{
+  opacity:1;
+  transform:translateX(0);
+  pointer-events:auto;
+}
+
+.page.fade-out{
+  opacity:0;
+  transform:translateY(10px);
+}
+
+.page-inner{
+  max-width:var(--page-max);
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:var(--gap);
+  transition:opacity .35s ease,transform .45s ease,filter .45s ease;
+}
+
+.page-inner.is-dim{
+  opacity:0;
+  transform:translateY(10px);
+  filter:blur(6px);
+}
+
+.page-inner.is-hidden{
+  display:none;
 }
 
 /* ================= CARDS ================= */
 .card{
   padding:18px;
   border-radius:var(--radius);
-  margin-bottom:16px;
   animation:fadeUp .6s ease;
 }
 
@@ -111,25 +204,30 @@ body{
 
 /* ================= NEWS STRIP ================= */
 .news-strip{
-  display:flex;
-  gap:14px;
-  overflow-x:auto;
-  padding:4px 4px 14px;
-  margin-top:10px;
-  scroll-snap-type:x mandatory;
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
 }
 
 .news-strip::-webkit-scrollbar{display:none}
 
+.news-track{
+  display:flex;
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+
 .news{
-  min-width:260px;
-  padding:16px;
+  min-width:100%;
+  padding:20px 22px;
+  min-height:150px;
   border-radius:20px;
-  scroll-snap-align:start;
   box-shadow:
     0 18px 40px rgba(0,0,0,.45),
     inset 0 1px 0 rgba(255,255,255,.35);
-  transform:translateY(-2px);
+  border:1px solid rgba(103,232,249,.45);
+  background:
+    radial-gradient(220px 140px at 20% 0%, rgba(103,232,249,.18), transparent 70%),
+    linear-gradient(180deg,var(--glass),var(--glass-weak));
 }
 
 .news h3{
@@ -151,6 +249,22 @@ body{
   bottom:16px;
   display:flex;
   justify-content:center;
+  z-index:5;
+  transition:opacity .35s ease,transform .45s ease;
+}
+
+body[data-state="loading"] .tabbar-wrap,
+body[data-state="details"] .tabbar-wrap{
+  opacity:0;
+  transform:translateY(12px);
+  pointer-events:none;
+}
+
+body[data-state="loading"] .sidebar,
+body[data-state="details"] .sidebar{
+  opacity:0;
+  transform:translateX(-6px);
+  pointer-events:none;
 }
 
 .tabbar{
@@ -158,31 +272,223 @@ body{
   padding:10px;
   gap:6px;
   border-radius:999px;
+  position:relative;
+  align-items:center;
+  width:246px;
+  height:66px;
+}
+
+.tabbar-indicator{
+  position:absolute;
+  top:6px;
+  bottom:6px;
+  left:0;
+  width:110px;
+  border-radius:999px;
+  background:
+    radial-gradient(120px 60px at 30% 20%, rgba(103,232,249,.55), transparent 70%),
+    linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,.12));
+  box-shadow:
+    0 18px 36px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.55);
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+  z-index:0;
+  pointer-events:none;
+  will-change:transform;
 }
 
 .tab{
   position:relative;
-  min-width:110px;
-  padding:10px 14px;
+  width:110px;
+  height:52px;
+  padding:8px 12px;
   border-radius:999px;
   display:flex;
   flex-direction:column;
   align-items:center;
+  justify-content:center;
   gap:4px;
   font-size:12px;
+  line-height:1;
   color:var(--muted);
   cursor:pointer;
+  background:transparent;
+  border:1px solid transparent;
+  box-shadow:none;
+  transition:color .25s ease;
+  overflow:hidden;
+  z-index:1;
 }
 
 .tab.active{
-  background:rgba(255,255,255,.22);
   color:var(--text);
 }
+
+
+.news-controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.news-btn{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:
+    radial-gradient(80px 50px at 40% 20%, rgba(103,232,249,.35), transparent 70%),
+    linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,.08));
+  color:var(--text);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  box-shadow:0 14px 30px rgba(0,0,0,.35);
+  transition:transform .2s ease,background .2s ease,box-shadow .2s ease;
+}
+
+.news-btn:active{
+  transform:translateY(1px);
+}
+
+.section-title{
+  margin:0;
+  font-size:20px;
+  font-weight:700;
+  color:var(--text);
+}
+
+.button-row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.glass-button{
+  flex:1 1 220px;
+  padding:18px 22px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.24);
+  background:
+    radial-gradient(240px 120px at 20% 0%, rgba(103,232,249,.35), transparent 70%),
+    linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.1));
+  color:var(--text);
+  cursor:pointer;
+  text-align:left;
+  font-size:16px;
+  font-weight:700;
+  box-shadow:
+    0 20px 46px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .2s ease,background .2s ease,box-shadow .2s ease;
+}
+
+.glass-button span{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.glass-button:active{
+  transform:translateY(1px);
+}
+
+.welcome-head{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.logo-placeholder{
+  width:64px;
+  height:64px;
+  border-radius:14px;
+  border:1px dashed rgba(255,255,255,.45);
+  background:
+    linear-gradient(135deg, rgba(103,232,249,.18), rgba(255,255,255,.08));
+  display:grid;
+  place-items:center;
+  font-size:11px;
+  color:var(--muted);
+  text-align:center;
+}
+
+.schedule-detail{
+  opacity:0;
+  transform:translateY(10px);
+  pointer-events:none;
+  transition:opacity .35s ease,transform .45s ease;
+}
+
+.schedule-detail.is-active{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
 
 /* ================= ANIM ================= */
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(10px)}
   to{opacity:1}
+}
+
+@keyframes orbFloat{
+  0%{transform:translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(1)}
+  50%{transform:translate(-50%,-50%) translate(calc(var(--tx) * .9), calc(var(--ty) * .85)) scale(1.02)}
+  100%{transform:translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(1)}
+}
+
+.center-orbs{
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .6s ease;
+  z-index:2;
+}
+
+body[data-state="loading"] .center-orbs{
+  opacity:1;
+}
+
+.center-orb-wrap{
+  width:140px;
+  height:140px;
+  position:relative;
+  animation:centerOrbit 2.8s ease-in-out infinite;
+}
+
+.center-orb{
+  position:absolute;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  filter:blur(2px);
+  opacity:.85;
+}
+
+.center-orb.purple{
+  background:radial-gradient(circle at 30% 30%, rgba(167,139,250,.85), rgba(167,139,250,.25) 60%, transparent 70%);
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.center-orb.cyan{
+  background:radial-gradient(circle at 30% 30%, rgba(103,232,249,.9), rgba(103,232,249,.25) 60%, transparent 70%);
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+@keyframes centerOrbit{
+  0%{transform:rotate(0deg) scale(.7); opacity:0}
+  20%{transform:rotate(30deg) scale(.85); opacity:1}
+  100%{transform:rotate(360deg) scale(1)}
 }
 
 /* ================= RESPONSIVE ================= */
@@ -193,12 +499,20 @@ body{
     display:flex;
     width:220px;
   }
-  .pages{width:200%}
 }
 </style>
 </head>
 
 <body>
+
+<div class="bg-orb orb-purple" aria-hidden="true"></div>
+<div class="bg-orb orb-cyan" aria-hidden="true"></div>
+<div class="center-orbs" aria-hidden="true">
+  <div class="center-orb-wrap">
+    <div class="center-orb purple"></div>
+    <div class="center-orb cyan"></div>
+  </div>
+</div>
 
 <div class="app">
 
@@ -214,45 +528,89 @@ body{
 
     <!-- ===== HOME ===== -->
     <section class="page">
-      <div class="card glass">
-        <h2>Добро пожаловать</h2>
-        <p>Сайт находится в активной разработке</p>
-      </div>
-
-      <div class="news-strip">
-        <div class="news glass">
-          <h3>🔮 Новый дизайн сайта</h3>
-          <p>
-            Мы полностью перерабатываем интерфейс.
-            Скоро сайт станет быстрее и удобнее.
-          </p>
+      <div class="page-inner">
+        <div class="card glass">
+          <div class="welcome-head">
+            <div class="logo-placeholder">ЛОГО</div>
+            <div>
+              <h2>Добро пожаловать</h2>
+              <p>Сайт находится в активной разработке</p>
+            </div>
+          </div>
         </div>
 
-        <div class="news glass">
-          <h3>📅 Расписания и изменения</h3>
-          <p>
-            Добавлены все изменения и актуальные
-            расписания для всех групп.
-          </p>
+        <h3 class="section-title">Новости.</h3>
+
+        <div class="news-strip glass" id="newsStrip">
+          <div class="news-track" id="newsTrack">
+            <div class="news glass">
+              <h3>🔮 Новый дизайн сайта</h3>
+              <p>
+                Мы полностью перерабатываем интерфейс.
+                Скоро сайт станет быстрее и удобнее.
+              </p>
+            </div>
+
+            <div class="news glass">
+              <h3>📅 Расписания и изменения</h3>
+              <p>
+                Добавлены все изменения и актуальные
+                расписания для всех групп.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="news-controls">
+          <button class="news-btn" id="newsPrev" aria-label="Назад">◀</button>
+          <button class="news-btn" id="newsNext" aria-label="Вперёд">▶</button>
         </div>
       </div>
     </section>
 
     <!-- ===== SCHEDULE ===== -->
     <section class="page">
-      <div class="card glass">
-        <h2>Расписание</h2>
-        <p>Выберите свою группу</p>
+      <div class="page-inner">
+        <div class="card glass">
+          <h2>Расписание</h2>
+          <p>Выберите свою группу</p>
+        </div>
+
+        <div class="button-row">
+          <button class="glass-button" type="button" data-view="changes">
+            Изменения
+            <span>Обновления и замены на сегодня</span>
+          </button>
+          <button class="glass-button" type="button" data-view="main">
+            Основное расписание
+            <span>Регулярные пары по группам</span>
+          </button>
+        </div>
+
+        <div class="schedule-detail" data-view="changes">
+          <div class="card glass">
+            <h2>Изменения</h2>
+            <p>Раздел с изменениями откроется здесь</p>
+          </div>
+        </div>
+
+        <div class="schedule-detail" data-view="main">
+          <div class="card glass">
+            <h2>Основное расписание</h2>
+            <p>Раздел с основным расписанием откроется здесь</p>
+          </div>
+        </div>
       </div>
     </section>
 
-  </div>
+</div>
 </div>
 </div>
 
 <!-- ===== TAB BAR (MOBILE) ===== -->
 <div class="tabbar-wrap">
   <nav class="tabbar glass">
+    <div class="tabbar-indicator" id="tabIndicator" aria-hidden="true"></div>
     <div class="tab active" data-tab="0">🏠<span>Главная</span></div>
     <div class="tab" data-tab="1">📅<span>Расписание</span></div>
   </nav>
@@ -261,21 +619,88 @@ body{
 <script>
 let current=0;
 const pages=document.getElementById("pages");
+const pageItems=[...document.querySelectorAll(".page")];
 const tabs=[...document.querySelectorAll(".tab")];
 const side=[...document.querySelectorAll(".sidebar a")];
+const tabbar=document.querySelector(".tabbar");
+const tabIndicator=document.getElementById("tabIndicator");
+const orbs=[...document.querySelectorAll(".bg-orb")];
+const newsTrack=document.getElementById("newsTrack");
+const newsPrev=document.getElementById("newsPrev");
+const newsNext=document.getElementById("newsNext");
+const newsItems=[...document.querySelectorAll(".news")];
+const scheduleButtons=[...document.querySelectorAll(".glass-button")];
+const scheduleDetails=[...document.querySelectorAll(".schedule-detail")];
+let newsIndex=0;
+
+function updateIndicator(){
+  if(!tabIndicator || !tabbar) return;
+  const active=tabs[current];
+  if(!active) return;
+  const barRect=tabbar.getBoundingClientRect();
+  const rect=active.getBoundingClientRect();
+  const x=rect.left-barRect.left;
+  tabIndicator.style.transform=`translate3d(${Math.round(x)}px,0,0)`;
+}
 
 function setTab(i){
   current=i;
-  pages.style.transform=`translateX(-${i*100}%)`;
+  pageItems.forEach((p,idx)=>p.classList.toggle("is-active",idx===i));
   tabs.forEach(t=>t.classList.remove("active"));
   side.forEach(s=>s.classList.remove("active"));
   tabs[i]?.classList.add("active");
   side[i]?.classList.add("active");
+  document.body.dataset.tab=String(i);
+  updateIndicator();
+  if(i===0){
+    document.body.dataset.state="";
+    document.body.classList.remove("orbiting");
+    const schedulePage=pageItems[1];
+    const scheduleInner=schedulePage?.querySelector(".page-inner");
+    scheduleInner?.classList.remove("is-dim","is-hidden");
+    scheduleDetails.forEach(d=>d.classList.remove("is-active"));
+  }
+}
+
+function randomizeOrbs(){
+  const ranges=[
+    {x:[-180,160], y:[-220,80]},
+    {x:[40,240], y:[40,260]}
+  ];
+  orbs.forEach((orb,idx)=>{
+    const r=ranges[idx%ranges.length];
+    const x=Math.round(r.x[0]+Math.random()*(r.x[1]-r.x[0]));
+    const y=Math.round(r.y[0]+Math.random()*(r.y[1]-r.y[0]));
+    orb.style.setProperty("--tx",`${x}px`);
+    orb.style.setProperty("--ty",`${y}px`);
+  });
+}
+
+function openSchedule(view){
+  if(document.body.dataset.state==="loading") return;
+  const schedulePage=pageItems[1];
+  const scheduleInner=schedulePage?.querySelector(".page-inner");
+  document.body.dataset.state="loading";
+  document.body.classList.remove("orbiting");
+  scheduleInner?.classList.add("is-dim");
+  scheduleDetails.forEach(d=>d.classList.remove("is-active"));
+  setTimeout(()=>document.body.classList.add("orbiting"),400);
+  setTimeout(()=>{
+    if(view==="main"){
+      window.location.href="main/indexMain.html";
+      return;
+    }
+    scheduleInner?.classList.add("is-hidden");
+    scheduleDetails.forEach(d=>d.classList.toggle("is-active",d.dataset.view===view));
+    document.body.classList.remove("orbiting");
+    document.body.dataset.state="details";
+    randomizeOrbs();
+  },900);
 }
 
 /* ===== TAB CLICK ===== */
 tabs.forEach(tab=>{
-  tab.onclick=()=>setTab(+tab.dataset.tab);
+  tab.onclick=e=>setTab(+e.currentTarget.dataset.tab);
 });
 
 /* ===== SIDEBAR CLICK ===== */
@@ -295,6 +720,37 @@ document.getElementById("main").addEventListener("touchend",e=>{
     if(dx>0 && current>0) setTab(current-1);
   }
 });
+
+function setNews(i){
+  if(!newsTrack) return;
+  newsIndex=(i+newsItems.length)%newsItems.length;
+  newsTrack.style.transform=`translateX(-${newsIndex*100}%)`;
+}
+
+newsPrev?.addEventListener("click",()=>setNews(newsIndex-1));
+newsNext?.addEventListener("click",()=>setNews(newsIndex+1));
+
+let newsStartX=0;
+newsTrack?.addEventListener("touchstart",e=>{
+  newsStartX=e.touches[0].clientX;
+});
+newsTrack?.addEventListener("touchend",e=>{
+  const dx=e.changedTouches[0].clientX-newsStartX;
+  if(Math.abs(dx)>50){
+    if(dx<0) setNews(newsIndex+1);
+    if(dx>0) setNews(newsIndex-1);
+  }
+});
+
+scheduleButtons.forEach(btn=>{
+  btn.addEventListener("click",()=>openSchedule(btn.dataset.view));
+});
+
+setTab(0);
+setNews(0);
+randomizeOrbs();
+
+window.addEventListener("resize",updateIndicator);
 </script>
 
 </body>
