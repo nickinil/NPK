@@ -1,1 +1,257 @@
 
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>18 группа — Основное расписание</title>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap");
+:root{
+  --bg:#0b1020;
+  --glass:rgba(255,255,255,.14);
+  --glass-weak:rgba(255,255,255,.08);
+  --border:rgba(255,255,255,.22);
+  --text:rgba(255,255,255,.96);
+  --muted:rgba(255,255,255,.6);
+  --accent:#67e8f9;
+  --blur:18px;
+  --radius:22px;
+  --page-max:980px;
+  --page-pad:20px;
+  --gap:16px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto;
+  background:
+    radial-gradient(900px 500px at 12% -10%, #1b2b64, transparent),
+    radial-gradient(900px 500px at 90% 15%, #1f5b6e, transparent),
+    radial-gradient(900px 900px at 10% 90%, #1e2a45, transparent),
+    var(--bg);
+  color:var(--text);
+  overflow:hidden;
+  letter-spacing:.2px;
+}
+
+.bg-orb{
+  position:fixed;
+  top:50%;
+  left:50%;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  filter:blur(18px);
+  opacity:.45;
+  z-index:0;
+  transition:transform 1.2s cubic-bezier(.22,1,.36,1),opacity .6s ease;
+  pointer-events:none;
+}
+.orb-purple{
+  --tx:-120px;
+  --ty:-160px;
+  background:radial-gradient(circle at 30% 30%, rgba(167,139,250,.75), rgba(167,139,250,.2) 55%, transparent 70%);
+  transform:translate(-50%,-50%) translate(var(--tx),var(--ty));
+}
+.orb-cyan{
+  --tx:260px;
+  --ty:240px;
+  background:radial-gradient(circle at 30% 30%, rgba(103,232,249,.75), rgba(103,232,249,.2) 55%, transparent 70%);
+  transform:translate(-50%,-50%) translate(var(--tx),var(--ty));
+}
+body[data-tab="1"] .orb-purple{--tx:80px;--ty:-220px;}
+body[data-tab="1"] .orb-cyan{--tx:-40px;--ty:320px;}
+
+.glass{
+  background:linear-gradient(180deg,var(--glass),var(--glass-weak));
+  border:1px solid var(--border);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.app{height:100vh;display:flex;position:relative;z-index:1;}
+
+.sidebar{display:none;flex-direction:column;gap:8px;padding:16px;border-radius:28px;margin:16px;}
+.sidebar a{padding:12px 16px;border-radius:16px;color:var(--muted);text-decoration:none;cursor:pointer;transition:background .25s ease,color .25s ease,transform .25s ease;}
+.sidebar a.active{background:rgba(255,255,255,.22);color:var(--text);transform:translateX(2px);}
+
+.main{flex:1;overflow:hidden;position:relative;}
+.pages{position:relative;height:100%;}
+.page{position:absolute;inset:0;width:100%;padding:var(--page-pad);overflow-y:auto;}
+.page-inner{max-width:var(--page-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--gap);}
+
+.card{padding:18px;border-radius:var(--radius);animation:fadeUp .6s ease;}
+.card h2{margin:0 0 6px;font-size:18px;}
+.card p{margin:0;color:var(--muted);font-size:14px;}
+
+.welcome-head{display:flex;align-items:center;gap:16px;}
+
+.section-title{margin:0;font-size:20px;font-weight:700;color:var(--text);}
+
+.day{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:20px;}
+.day h3{margin:0;font-size:18px;}
+
+.lesson{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:12px 14px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.18);}
+.lesson--empty{opacity:.6;}
+.lesson--lunch{background:linear-gradient(180deg,rgba(103,232,249,.18),rgba(255,255,255,.06));border:1px dashed rgba(103,232,249,.4);}
+.lesson__time{font-weight:600;color:var(--text);} 
+.lesson__title{margin:0 0 4px;font-weight:600;}
+.lesson__meta{margin:0;color:var(--muted);font-size:13px;}
+
+.subgroups{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;margin-top:6px;}
+.subgroup{padding:8px 10px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);font-size:13px;color:var(--text);}
+.subgroup span{display:block;color:var(--muted);font-size:12px;}
+
+.tabbar-wrap{position:fixed;left:0;right:0;bottom:16px;display:flex;justify-content:center;z-index:5;}
+.tabbar{display:flex;padding:10px;gap:6px;border-radius:999px;position:relative;align-items:center;width:246px;height:66px;}
+.tabbar-indicator{position:absolute;top:6px;bottom:6px;left:0;width:110px;border-radius:999px;background:radial-gradient(120px 60px at 30% 20%, rgba(103,232,249,.55), transparent 70%),linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,.12));box-shadow:0 18px 36px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.55);transition:transform .45s cubic-bezier(.22,1,.36,1);z-index:0;pointer-events:none;will-change:transform;}
+.tab{position:relative;width:110px;height:52px;padding:8px 12px;border-radius:999px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;line-height:1;color:var(--muted);cursor:pointer;background:transparent;border:1px solid transparent;}
+.tab.active{color:var(--text);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+
+@media(min-width:900px){
+  body{overflow:hidden}
+  .tabbar-wrap{display:none}
+  .sidebar{display:flex;width:220px;}
+}
+</style>
+</head>
+
+<body data-tab="1">
+<div class="bg-orb orb-purple" aria-hidden="true"></div>
+<div class="bg-orb orb-cyan" aria-hidden="true"></div>
+
+<div class="app">
+  <nav class="sidebar glass">
+    <a href="../index.html">🏠 Главная</a>
+    <a class="active">📅 18 группа</a>
+  </nav>
+
+  <div class="main" id="main">
+    <div class="pages" id="pages">
+      <section class="page">
+        <div class="page-inner">
+          <div class="card glass">
+            <div class="welcome-head">
+              <div>
+                <h2>18 группа</h2>
+                <p>Основное расписание по дням недели</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="section-title">Понедельник</h3>
+          <div class="day glass">
+            <div class="lesson"><div class="lesson__time">08:30–09:10</div><div><p class="lesson__title">Разговоры о важном — Классный час</p><p class="lesson__meta">Ауд. 307</p></div></div>
+            <div class="lesson"><div class="lesson__time">09:15–09:55</div><div><p class="lesson__title">Русский язык</p><p class="lesson__meta">Преподаватель Рафикова Э.Ф. · Ауд. 208</p></div></div>
+            <div class="lesson"><div class="lesson__time">10:05–10:45</div><div><p class="lesson__title">Русский язык</p><p class="lesson__meta">Преподаватель Рафикова Э.Ф. · Ауд. 208</p></div></div>
+            <div class="lesson lesson--lunch"><div class="lesson__time">10:50–11:30</div><div><p class="lesson__title">Обед</p></div></div>
+            <div class="lesson">
+              <div class="lesson__time">11:40–12:20</div>
+              <div>
+                <p class="lesson__title">Информатика</p>
+                <div class="subgroups">
+                  <div class="subgroup">1 подгруппа<span>Галимьянова Ю.Ф. · Ауд. 408</span></div>
+                  <div class="subgroup">2 подгруппа<span>Шарипова С.С. · Ауд. 409</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="lesson">
+              <div class="lesson__time">12:25–13:05</div>
+              <div>
+                <p class="lesson__title">Информатика</p>
+                <div class="subgroups">
+                  <div class="subgroup">1 подгруппа<span>Галимьянова Ю.Ф. · Ауд. 408</span></div>
+                  <div class="subgroup">2 подгруппа<span>Шарипова С.С. · Ауд. 409</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="lesson"><div class="lesson__time">13:15–13:55</div><div><p class="lesson__title">Математика</p><p class="lesson__meta">Преподаватель Галимьянова Ю.Ф. · Ауд. 213</p></div></div>
+            <div class="lesson"><div class="lesson__time">14:00–14:40</div><div><p class="lesson__title">Математика</p><p class="lesson__meta">Преподаватель Галимьянова Ю.Ф. · Ауд. 213</p></div></div>
+            <div class="lesson lesson--empty"><div class="lesson__time">14:45–15:25</div><div><p class="lesson__title">—</p></div></div>
+          </div>
+
+          <h3 class="section-title">Вторник</h3>
+          <div class="day glass">
+            <div class="lesson lesson--empty"><div class="lesson__time">07:40–08:25</div><div><p class="lesson__title">—</p></div></div>
+            <div class="lesson"><div class="lesson__time">08:30–09:15</div><div><p class="lesson__title">Обществознание</p><p class="lesson__meta">Преподаватель Багаутдинова Р.Р. · Ауд. 310</p></div></div>
+            <div class="lesson"><div class="lesson__time">09:20–10:05</div><div><p class="lesson__title">Обществознание</p><p class="lesson__meta">Преподаватель Багаутдинова Р.Р. · Ауд. 310</p></div></div>
+            <div class="lesson"><div class="lesson__time">10:15–11:00</div><div><p class="lesson__title">Математика</p><p class="lesson__meta">Преподаватель Галимьянова Ю.Ф. · Ауд. 307</p></div></div>
+            <div class="lesson"><div class="lesson__time">11:05–11:50</div><div><p class="lesson__title">Математика</p><p class="lesson__meta">Преподаватель Галимьянова Ю.Ф. · Ауд. 307</p></div></div>
+            <div class="lesson lesson--lunch"><div class="lesson__time">12:00–12:45</div><div><p class="lesson__title">Обед</p></div></div>
+            <div class="lesson lesson--empty"><div class="lesson__time">12:50–13:35</div><div><p class="lesson__title">—</p></div></div>
+            <div class="lesson"><div class="lesson__time">13:45–14:30</div><div><p class="lesson__title">История</p><p class="lesson__meta">Преподаватель Баев И.Э. · Ауд. 307</p></div></div>
+            <div class="lesson"><div class="lesson__time">14:35–15:20</div><div><p class="lesson__title">История</p><p class="lesson__meta">Преподаватель Баев И.Э. · Ауд. 307</p></div></div>
+            <div class="lesson"><div class="lesson__time">15:25–16:10</div><div><p class="lesson__title">История</p><p class="lesson__meta">Преподаватель Баев И.Э. · Ауд. 307</p></div></div>
+          </div>
+
+          <h3 class="section-title">Среда</h3>
+          <div class="day glass">
+            <div class="lesson lesson--empty"><div class="lesson__time">07:40–08:25</div><div><p class="lesson__title">—</p></div></div>
+            <div class="lesson lesson--empty"><div class="lesson__time">08:30–09:15</div><div><p class="lesson__title">—</p></div></div>
+            <div class="lesson"><div class="lesson__time">09:20–10:05</div><div><p class="lesson__title">Основы безопасности и защиты Родины</p><p class="lesson__meta">Преподаватель Ижбулдин Е.А. · Ауд. 313</p></div></div>
+            <div class="lesson"><div class="lesson__time">10:15–11:00</div><div><p class="lesson__title">Основы безопасности и защиты Родины</p><p class="lesson__meta">Преподаватель Ижбулдин Е.А. · Ауд. 313</p></div></div>
+            <div class="lesson lesson--lunch"><div class="lesson__time">11:05–11:50</div><div><p class="lesson__title">Обед</p></div></div>
+            <div class="lesson"><div class="lesson__time">12:00–12:45</div><div><p class="lesson__title">Основы безопасности и защиты Родины</p><p class="lesson__meta">Преподаватель Ижбулдин Е.А. · Ауд. 313</p></div></div>
+            <div class="lesson"><div class="lesson__time">12:50–13:35</div><div><p class="lesson__title">География</p><p class="lesson__meta">Преподаватель Багаутдинова Р.Р. · Ауд. 310</p></div></div>
+            <div class="lesson"><div class="lesson__time">13:45–14:30</div><div><p class="lesson__title">География</p><p class="lesson__meta">Преподаватель Багаутдинова Р.Р. · Ауд. 310</p></div></div>
+            <div class="lesson"><div class="lesson__time">14:35–15:20</div><div><p class="lesson__title">Физика</p><p class="lesson__meta">Преподаватель Аблаева О.Г. · Ауд. 413</p></div></div>
+            <div class="lesson"><div class="lesson__time">15:25–16:10</div><div><p class="lesson__title">Физика</p><p class="lesson__meta">Преподаватель Аблаева О.Г. · Ауд. 413</p></div></div>
+          </div>
+
+          <h3 class="section-title">Четверг</h3>
+          <div class="day glass">
+            <div class="lesson"><div class="lesson__time">08:30–10:05</div><div><p class="lesson__title">Математика (1–2 пары)</p><p class="lesson__meta">Преподаватель Галимьянова Ю.Ф. · Ауд. 307</p></div></div>
+            <div class="lesson"><div class="lesson__time">10:15–11:50</div><div><p class="lesson__title">Физкультура (3–4 пары)</p><p class="lesson__meta">Преподаватель Вафиева Т.В.</p></div></div>
+            <div class="lesson lesson--lunch"><div class="lesson__time">12:00–12:45</div><div><p class="lesson__title">Обед</p></div></div>
+            <div class="lesson"><div class="lesson__time">12:50–14:30</div><div><p class="lesson__title">Иностранный язык (5–6 пары)</p><p class="lesson__meta">Преподаватели Мухаметшина Р.Р., Мулланова Ф.М. · Ауд. 308 / 106</p></div></div>
+            <div class="lesson"><div class="lesson__time">14:35–16:10</div><div><p class="lesson__title">Биология (7–8 пары)</p><p class="lesson__meta">Преподаватель Печенкина Г.Н. · Ауд. 410</p></div></div>
+          </div>
+
+          <h3 class="section-title">Пятница</h3>
+          <div class="day glass">
+            <div class="lesson"><div class="lesson__time">07:40–09:15</div><div><p class="lesson__title">Химия (0–1 пары)</p><p class="lesson__meta">Преподаватель Шадрина Ю.С. · Ауд. 205</p></div></div>
+            <div class="lesson"><div class="lesson__time">09:20–12:45</div><div><p class="lesson__title">Литература (2–4 пары)</p><p class="lesson__meta">Преподаватель Глимянова Т.Р. · Ауд. 404</p></div></div>
+            <div class="lesson"><div class="lesson__time">12:50–14:30</div><div><p class="lesson__title">Математика (5–6 пары)</p><p class="lesson__meta">Преподаватель Галимьянова Ю.Ф. · Ауд. 213</p></div></div>
+            <div class="lesson"><div class="lesson__time">14:35–15:20</div><div><p class="lesson__title">Башкирский язык (7 пара)</p><p class="lesson__meta">Преподаватель Рафикова Э.Ф. · Ауд. 208</p></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="tabbar-wrap">
+  <nav class="tabbar glass">
+    <div class="tabbar-indicator" id="tabIndicator" aria-hidden="true"></div>
+    <div class="tab" onclick="location.href='../index.html'">🏠<span>Главная</span></div>
+    <div class="tab" onclick="location.href='./indexMain.html'">📅<span>Основное</span></div>
+  </nav>
+</div>
+
+<script>
+const tabbar=document.querySelector(".tabbar");
+const tabIndicator=document.getElementById("tabIndicator");
+
+function updateIndicator(){
+  if(!tabIndicator || !tabbar) return;
+  const active=document.querySelector(".tabbar .tab.active");
+  if(!active) return;
+  const barRect=tabbar.getBoundingClientRect();
+  const rect=active.getBoundingClientRect();
+  const x=rect.left-barRect.left;
+  tabIndicator.style.transform=`translate3d(${Math.round(x)}px,0,0)`;
+}
+
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.tab')[1]?.classList.add('active');
+updateIndicator();
+window.addEventListener("resize",updateIndicator);
+</script>
+
+</body>
+</html>
