@@ -2,234 +2,168 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Нефтекамский Педагогический Колледж</title>
-<meta name="description" content="Нефтекамский Педагогический Колледж — неофициальный сайт." />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Редизайн · НПК</title>
 
 <style>
-:root{
-  --bg:#0b1020;
-  --glass:rgba(255,255,255,.10);
-  --glass-weak:rgba(255,255,255,.06);
-  --border:rgba(255,255,255,.18);
-  --text:rgba(255,255,255,.94);
-  --muted:rgba(255,255,255,.65);
-  --accent:#7c5cff;
-  --radius:18px;
-  --blur:16px;
+/* ================= ROOT ================= */
+:root {
+  --bg: #0b1020;
+  --glass: rgba(255,255,255,.14);
+  --glass-weak: rgba(255,255,255,.08);
+  --border: rgba(255,255,255,.22);
+  --text: rgba(255,255,255,.95);
+  --muted: rgba(255,255,255,.65);
+  --accent: #8a7cff;
+  --blur: 18px;
+  --radius: 26px;
 }
-[data-theme="light"]{
-  --bg:#f5f6fb;
-  --glass:rgba(255,255,255,.9);
-  --glass-weak:rgba(255,255,255,.7);
-  --border:rgba(10,18,40,.12);
-  --text:#0b1020;
-  --muted:#4a4f6a;
-  --accent:#5b4bff;
+
+* {
+  box-sizing: border-box;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
   background:
-    radial-gradient(900px 500px at 20% 0%, #1a2350, transparent),
-    radial-gradient(900px 500px at 80% 20%, #2b1658, transparent),
+    radial-gradient(800px 500px at 20% 10%, #1a2350, transparent),
+    radial-gradient(700px 500px at 80% 20%, #3b1a5a, transparent),
     var(--bg);
-  color:var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-/* ===== glass ===== */
-.glass{
-  background:linear-gradient(180deg,var(--glass),var(--glass-weak));
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  backdrop-filter:blur(var(--blur));
-  -webkit-backdrop-filter:blur(var(--blur));
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
+/* ================= SVG FILTER ================= */
+svg {
+  position: absolute;
+  width: 0;
+  height: 0;
 }
 
-/* ===== layout ===== */
-.wrap{max-width:1100px;margin:auto;padding:20px 14px 80px}
+.liquid-glass {
+  position: relative;
+  padding: 48px 42px;
+  max-width: 420px;
+  text-align: center;
 
-/* ===== header ===== */
-.topbar{
-  padding:14px 18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-}
-.brand{text-decoration:none;color:var(--text)}
-.brand__text{font-weight:800;font-size:18px}
-.brand__sub{font-size:12px;color:var(--muted)}
-.nav{display:flex;gap:10px}
-.nav__link{
-  color:var(--text);
-  text-decoration:none;
-  padding:6px 10px;
-  border-radius:999px;
-}
-.nav__link.is-active{background:var(--glass)}
-.btn{
-  padding:8px 14px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:var(--glass);
-  color:var(--text);
-  cursor:pointer;
-  font-weight:600;
+  background: linear-gradient(
+    180deg,
+    var(--glass),
+    var(--glass-weak)
+  );
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.35);
+
+  animation:
+    drop-in 1.4s cubic-bezier(.22,1,.36,1) forwards,
+    liquid-pulse 6s ease-in-out infinite;
+
+  transform-origin: center;
+  filter: url(#liquid);
 }
 
-/* ===== hero ===== */
-.hero{margin-top:30px}
-.card{padding:26px;text-align:center}
-.h1{margin:0 0 10px;font-size:30px}
-.lead{margin:0 0 14px}
-.btn--primary{background:var(--accent);border:none;color:#fff}
-.stats{margin-top:14px;font-size:14px;color:var(--muted)}
-
-/* ===== news ===== */
-.news{margin-top:60px}
-.news h2{margin-bottom:20px}
-.news-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-}
-.news-card img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-  border-radius:12px;
-}
-.news-content{padding:14px}
-
-/* ===== footer ===== */
-.footer{margin-top:60px}
-.footer__inner{
-  padding:14px;
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  font-size:13px;
-  color:var(--muted);
+/* ================= TEXT ================= */
+h1 {
+  margin: 0 0 12px;
+  font-size: 26px;
+  letter-spacing: .3px;
 }
 
-/* ===== disclaimer ===== */
-.disclaimer-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
 }
-.disclaimer{max-width:420px;padding:22px;text-align:center}
+
+/* ================= ANIMATIONS ================= */
+@keyframes drop-in {
+  0% {
+    opacity: 0;
+    transform: scale(.4);
+    filter: blur(24px);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.05);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes liquid-pulse {
+  0%,100% {
+    box-shadow:
+      0 30px 80px rgba(0,0,0,.45),
+      inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  50% {
+    box-shadow:
+      0 40px 100px rgba(0,0,0,.55),
+      inset 0 1px 0 rgba(255,255,255,.45);
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 480px) {
+  .liquid-glass {
+    padding: 36px 26px;
+    max-width: 90%;
+  }
+  h1 {
+    font-size: 22px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- DISCLAIMER -->
-<div id="disclaimer" class="disclaimer-overlay">
-  <div class="disclaimer glass">
-    <h2>Важно</h2>
-    <p>
-      Этот сайт является <strong>неофициальным</strong> и заполняется
-      <strong>студентом НПК</strong>.
-    </p>
-    <p>
-      Информация носит справочный характер.<br>
-      Возможны ошибки — автор тоже человек 🙂
-    </p>
-    <button class="btn btn--primary" id="accept">Понятно</button>
-  </div>
+<!-- SVG LIQUID FILTER -->
+<svg>
+  <filter id="liquid">
+    <feImage
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAACXBIWXMAAA9hAAAPYQGoP6dpAAAB+ElEQVR4nO2XsU7DQBCHv0wYQWlBRCxgkVAIgQ9g8AIEEoEkFChEQxAIEQJBBCJIgQgBCBkAIQeJ9bYx5cPZ3b9+bnz7J1c3N5t3lH5gJ4UAGXgH7AF2wz4F3i1s4D0q2xQn1v4QHk0Qz+AX6b7lJz9K6tQJz8+gKc5vH0D8C8bqkX7D6x1uZ7hE6YcK2sH0u9x1j3kqf4u0xG1oF4wq7mD2gBvYJZgL1Yq3P6M4jRr5L2A8k1t5z8f7R6Q2dQ0rZJt9zCqv0A2m9qB5H3Z9o4b3uN8f8cQnqzP8oYx9Jb+H0G0K1Qz9Z3bA1z+7Gz7mA0c6sK7fKZzD1Q0PzHc3p2A7Yq3zv2Yy8rjZ4kYJ3p7R7P9+J1n8B5sC+QK9pYBz1GZb3Z5YB0Q0Jt1dZ4r+f5q4n5gF7q1s7wNf5K9QH4QG5r4L5y8+f8C+Z3cN7C6wD6kBz4D7wF2wB9YH0gB2wA9oF7gGf7A1gGZQAAAABJRU5ErkJggg=="
+      preserveAspectRatio="none"
+      result="noise"
+    />
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="noise"
+      scale="40"
+      xChannelSelector="R"
+      yChannelSelector="G"
+    />
+  </filter>
+</svg>
+
+<!-- GLASS CARD -->
+<div class="liquid-glass">
+  <h1>Редизайн в процессе</h1>
+  <p>
+    Мы обновляем сайт и готовим<br>
+    новый визуальный стиль.<br><br>
+    Доступ будет открыт совсем скоро ✨
+  </p>
 </div>
-
-<!-- HEADER -->
-<header class="topbar glass">
-  <a class="brand" href="./">
-    <div class="brand__text">НПК</div>
-    <div class="brand__sub">Нефтекамский Педагогический Колледж</div>
-  </a>
-  <nav class="nav">
-    <a class="nav__link is-active" href="./">Главная</a>
-    <a class="nav__link" href="./schedule/">Расписание</a>
-  </nav>
-  <button class="btn" id="theme">🌓 Тема</button>
-</header>
-
-<main class="wrap">
-
-<!-- HERO -->
-<section class="hero">
-  <div class="card glass">
-    <h1 class="h1">Нефтекамский Педагогический Колледж</h1>
-    <p class="lead">Информация и расписание учебных групп</p>
-    <a class="btn btn--primary" href="./schedule/">Перейти к расписанию</a>
-    <div class="stats">👀 Посещений сайта: <strong id="visits">—</strong></div>
-  </div>
-</section>
-
-<!-- NEWS -->
-<section class="news">
-  <h2>Новости</h2>
-  <div class="news-grid">
-
-    <article class="news-card glass">
-  <div class="news-media">
-    <img src="assets/news/NPKLOGO.png" alt="Новый сайт">
-  </div>
-  <div class="news-content">
-    <h3>Новый сайт!</h3>
-    <p class="muted">
-      Ждите изменений на сайте! Пока добавил только 25 и 31 группу. 😊
-    </p>
-  </div>
-</article>
-
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="footer__inner glass">
-    <span>© <span id="year"></span> НПК</span>
-    <span>Сайт неофициальный · Сделано с любовью ❤️</span>
-  </div>
-</footer>
-
-</main>
-
-<script>
-/* year */
-document.getElementById("year").textContent=new Date().getFullYear();
-
-/* theme */
-const root=document.documentElement;
-const themeBtn=document.getElementById("theme");
-if(localStorage.theme)root.dataset.theme=localStorage.theme;
-themeBtn.onclick=()=>{
-  root.dataset.theme=root.dataset.theme==="light"?"dark":"light";
-  localStorage.theme=root.dataset.theme;
-};
-
-/* visits */
-let v=localStorage.getItem("npkVisits");
-v=v?+v+1:1;
-localStorage.setItem("npkVisits",v);
-document.getElementById("visits").textContent=v;
-
-/* disclaimer */
-const d=document.getElementById("disclaimer");
-if(!localStorage.npkDisclaimer){
-  d.style.display="flex";
-}
-document.getElementById("accept").onclick=()=>{
-  localStorage.npkDisclaimer=1;
-  d.remove();
-};
-</script>
 
 </body>
 </html>
