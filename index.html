@@ -3,167 +3,299 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Редизайн · НПК</title>
+<title>НПК</title>
 
 <style>
 /* ================= ROOT ================= */
-:root {
-  --bg: #0b1020;
-  --glass: rgba(255,255,255,.14);
-  --glass-weak: rgba(255,255,255,.08);
-  --border: rgba(255,255,255,.22);
-  --text: rgba(255,255,255,.95);
-  --muted: rgba(255,255,255,.65);
-  --accent: #8a7cff;
-  --blur: 18px;
-  --radius: 26px;
+:root{
+  --bg:#0b1020;
+  --glass:rgba(255,255,255,.14);
+  --glass-weak:rgba(255,255,255,.08);
+  --border:rgba(255,255,255,.22);
+  --text:rgba(255,255,255,.96);
+  --muted:rgba(255,255,255,.6);
+  --accent:#a78bfa;
+  --blur:18px;
+  --radius:22px;
 }
 
-* {
-  box-sizing: border-box;
-}
+*{box-sizing:border-box}
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: var(--text);
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
   background:
-    radial-gradient(800px 500px at 20% 10%, #1a2350, transparent),
-    radial-gradient(700px 500px at 80% 20%, #3b1a5a, transparent),
+    radial-gradient(900px 500px at 10% 0%, #1a2350, transparent),
+    radial-gradient(900px 500px at 90% 20%, #3b1a5a, transparent),
     var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  color:var(--text);
+  overflow:hidden;
 }
 
-/* ================= SVG FILTER ================= */
-svg {
-  position: absolute;
-  width: 0;
-  height: 0;
+/* ================= GLASS ================= */
+.glass{
+  background:linear-gradient(180deg,var(--glass),var(--glass-weak));
+  border:1px solid var(--border);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
 }
 
-.liquid-glass {
-  position: relative;
-  padding: 48px 42px;
-  max-width: 420px;
-  text-align: center;
+/* ================= LAYOUT ================= */
+.app{
+  height:100vh;
+  display:flex;
+}
 
-  background: linear-gradient(
-    180deg,
-    var(--glass),
-    var(--glass-weak)
-  );
+/* ================= SIDEBAR (PC) ================= */
+.sidebar{
+  display:none;
+  flex-direction:column;
+  gap:8px;
+  padding:16px;
+  border-radius:28px;
+  margin:16px;
+}
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+.sidebar a{
+  padding:12px 16px;
+  border-radius:16px;
+  color:var(--muted);
+  text-decoration:none;
+  cursor:pointer;
+}
 
-  backdrop-filter: blur(var(--blur));
-  -webkit-backdrop-filter: blur(var(--blur));
+.sidebar a.active{
+  background:rgba(255,255,255,.22);
+  color:var(--text);
+}
 
+/* ================= MAIN ================= */
+.main{
+  flex:1;
+  overflow:hidden;
+  position:relative;
+}
+
+.pages{
+  display:flex;
+  width:200%;
+  height:100%;
+  transition:.45s cubic-bezier(.22,1,.36,1);
+}
+
+.page{
+  width:100%;
+  padding:20px;
+  overflow-y:auto;
+}
+
+/* ================= CARDS ================= */
+.card{
+  padding:18px;
+  border-radius:var(--radius);
+  margin-bottom:16px;
+  animation:fadeUp .6s ease;
+}
+
+.card h2{
+  margin:0 0 6px;
+  font-size:18px;
+}
+
+.card p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* ================= NEWS STRIP ================= */
+.news-strip{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding:4px 4px 14px;
+  margin-top:10px;
+  scroll-snap-type:x mandatory;
+}
+
+.news-strip::-webkit-scrollbar{display:none}
+
+.news{
+  min-width:260px;
+  padding:16px;
+  border-radius:20px;
+  scroll-snap-align:start;
   box-shadow:
-    0 30px 80px rgba(0,0,0,.45),
+    0 18px 40px rgba(0,0,0,.45),
     inset 0 1px 0 rgba(255,255,255,.35);
-
-  animation:
-    drop-in 1.4s cubic-bezier(.22,1,.36,1) forwards,
-    liquid-pulse 6s ease-in-out infinite;
-
-  transform-origin: center;
-  filter: url(#liquid);
+  transform:translateY(-2px);
 }
 
-/* ================= TEXT ================= */
-h1 {
-  margin: 0 0 12px;
-  font-size: 26px;
-  letter-spacing: .3px;
+.news h3{
+  margin:0 0 6px;
+  font-size:16px;
 }
 
-p {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--muted);
+.news p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
 }
 
-/* ================= ANIMATIONS ================= */
-@keyframes drop-in {
-  0% {
-    opacity: 0;
-    transform: scale(.4);
-    filter: blur(24px);
-  }
-  55% {
-    opacity: 1;
-    transform: scale(1.05);
-    filter: blur(6px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
+/* ================= TAB BAR (MOBILE) ================= */
+.tabbar-wrap{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:16px;
+  display:flex;
+  justify-content:center;
 }
 
-@keyframes liquid-pulse {
-  0%,100% {
-    box-shadow:
-      0 30px 80px rgba(0,0,0,.45),
-      inset 0 1px 0 rgba(255,255,255,.35);
-  }
-  50% {
-    box-shadow:
-      0 40px 100px rgba(0,0,0,.55),
-      inset 0 1px 0 rgba(255,255,255,.45);
-  }
+.tabbar{
+  display:flex;
+  padding:10px;
+  gap:6px;
+  border-radius:999px;
 }
 
-/* ================= MOBILE ================= */
-@media (max-width: 480px) {
-  .liquid-glass {
-    padding: 36px 26px;
-    max-width: 90%;
+.tab{
+  position:relative;
+  min-width:110px;
+  padding:10px 14px;
+  border-radius:999px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  font-size:12px;
+  color:var(--muted);
+  cursor:pointer;
+}
+
+.tab.active{
+  background:rgba(255,255,255,.22);
+  color:var(--text);
+}
+
+/* ================= ANIM ================= */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1}
+}
+
+/* ================= RESPONSIVE ================= */
+@media(min-width:900px){
+  body{overflow:hidden}
+  .tabbar-wrap{display:none}
+  .sidebar{
+    display:flex;
+    width:220px;
   }
-  h1 {
-    font-size: 22px;
-  }
+  .pages{width:200%}
 }
 </style>
 </head>
 
 <body>
 
-<!-- SVG LIQUID FILTER -->
-<svg>
-  <filter id="liquid">
-    <feImage
-      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAACXBIWXMAAA9hAAAPYQGoP6dpAAAB+ElEQVR4nO2XsU7DQBCHv0wYQWlBRCxgkVAIgQ9g8AIEEoEkFChEQxAIEQJBBCJIgQgBCBkAIQeJ9bYx5cPZ3b9+bnz7J1c3N5t3lH5gJ4UAGXgH7AF2wz4F3i1s4D0q2xQn1v4QHk0Qz+AX6b7lJz9K6tQJz8+gKc5vH0D8C8bqkX7D6x1uZ7hE6YcK2sH0u9x1j3kqf4u0xG1oF4wq7mD2gBvYJZgL1Yq3P6M4jRr5L2A8k1t5z8f7R6Q2dQ0rZJt9zCqv0A2m9qB5H3Z9o4b3uN8f8cQnqzP8oYx9Jb+H0G0K1Qz9Z3bA1z+7Gz7mA0c6sK7fKZzD1Q0PzHc3p2A7Yq3zv2Yy8rjZ4kYJ3p7R7P9+J1n8B5sC+QK9pYBz1GZb3Z5YB0Q0Jt1dZ4r+f5q4n5gF7q1s7wNf5K9QH4QG5r4L5y8+f8C+Z3cN7C6wD6kBz4D7wF2wB9YH0gB2wA9oF7gGf7A1gGZQAAAABJRU5ErkJggg=="
-      preserveAspectRatio="none"
-      result="noise"
-    />
-    <feDisplacementMap
-      in="SourceGraphic"
-      in2="noise"
-      scale="40"
-      xChannelSelector="R"
-      yChannelSelector="G"
-    />
-  </filter>
-</svg>
+<div class="app">
 
-<!-- GLASS CARD -->
-<div class="liquid-glass">
-  <h1>Редизайн в процессе</h1>
-  <p>
-    Я обновляю сайт и готовлю<br>
-    новый визуальный стиль.<br><br>
-    Доступ будет открыт совсем скоро ✨
-  </p>
+<!-- ===== SIDEBAR (PC) ===== -->
+<nav class="sidebar glass">
+  <a class="active" data-tab="0">🏠 Главная</a>
+  <a data-tab="1">📅 Расписание</a>
+</nav>
+
+<!-- ===== MAIN ===== -->
+<div class="main" id="main">
+  <div class="pages" id="pages">
+
+    <!-- ===== HOME ===== -->
+    <section class="page">
+      <div class="card glass">
+        <h2>Добро пожаловать</h2>
+        <p>Сайт находится в активной разработке</p>
+      </div>
+
+      <div class="news-strip">
+        <div class="news glass">
+          <h3>🔮 Новый дизайн сайта</h3>
+          <p>
+            Мы полностью перерабатываем интерфейс.
+            Скоро сайт станет быстрее и удобнее.
+          </p>
+        </div>
+
+        <div class="news glass">
+          <h3>📅 Расписания и изменения</h3>
+          <p>
+            Добавлены все изменения и актуальные
+            расписания для всех групп.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SCHEDULE ===== -->
+    <section class="page">
+      <div class="card glass">
+        <h2>Расписание</h2>
+        <p>Выберите свою группу</p>
+      </div>
+    </section>
+
+  </div>
 </div>
+</div>
+
+<!-- ===== TAB BAR (MOBILE) ===== -->
+<div class="tabbar-wrap">
+  <nav class="tabbar glass">
+    <div class="tab active" data-tab="0">🏠<span>Главная</span></div>
+    <div class="tab" data-tab="1">📅<span>Расписание</span></div>
+  </nav>
+</div>
+
+<script>
+let current=0;
+const pages=document.getElementById("pages");
+const tabs=[...document.querySelectorAll(".tab")];
+const side=[...document.querySelectorAll(".sidebar a")];
+
+function setTab(i){
+  current=i;
+  pages.style.transform=`translateX(-${i*100}%)`;
+  tabs.forEach(t=>t.classList.remove("active"));
+  side.forEach(s=>s.classList.remove("active"));
+  tabs[i]?.classList.add("active");
+  side[i]?.classList.add("active");
+}
+
+/* ===== TAB CLICK ===== */
+tabs.forEach(tab=>{
+  tab.onclick=()=>setTab(+tab.dataset.tab);
+});
+
+/* ===== SIDEBAR CLICK ===== */
+side.forEach(s=>{
+  s.onclick=()=>setTab(+s.dataset.tab);
+});
+
+/* ===== SWIPE ===== */
+let startX=0;
+document.getElementById("main").addEventListener("touchstart",e=>{
+  startX=e.touches[0].clientX;
+});
+document.getElementById("main").addEventListener("touchend",e=>{
+  const dx=e.changedTouches[0].clientX-startX;
+  if(Math.abs(dx)>60){
+    if(dx<0 && current<1) setTab(current+1);
+    if(dx>0 && current>0) setTab(current-1);
+  }
+});
+</script>
 
 </body>
 </html>
